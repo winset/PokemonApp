@@ -1,4 +1,4 @@
-package com.nasa.myapplication
+package com.space.myapplication
 
 import org.junit.Test
 
