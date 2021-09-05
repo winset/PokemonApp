@@ -1,20 +1,27 @@
 package com.space.myapplication.domain
 
 import com.space.myapplication.core.Abstract
+import com.space.myapplication.core.Upcoming
 import com.space.myapplication.presentation.UpcomingUi
-import java.lang.Exception
+import retrofit2.HttpException
+import java.net.UnknownHostException
+import kotlin.Exception
 
-sealed class UpcomingDomain : Abstract.Object<UpcomingUi, Abstract.Mapper.Empty>() {
-    class Success() : UpcomingDomain() {
-        override fun map(mapper: Abstract.Mapper.Empty): UpcomingUi {
-            TODO("Not yet implemented")
-        }
+sealed class UpcomingDomain : Abstract.Object<UpcomingUi, UpcomingsToDomainMapper>() {
+
+    class Success(private val upcomings: List<Upcoming>) : UpcomingDomain() {
+        override fun map(mapper: UpcomingsToDomainMapper) = mapper.map(upcomings)
     }
 
-    class Fail(errorType:Int) : UpcomingDomain() {
-        override fun map(mapper: Abstract.Mapper.Empty): UpcomingUi {
-            
-            TODO("Not yet implemented")
-        }
+    class Fail(private val exception: Exception) : UpcomingDomain() {
+        override fun map(
+            mapper: UpcomingsToDomainMapper
+        ) = mapper.map(
+            when (exception) {
+                is UnknownHostException -> ErrorType.NO_CONNECTION
+                is HttpException -> ErrorType.SERVICE_UNAVAILABLE
+                else -> ErrorType.GENERIC_ERROR
+            }
+        )
     }
 }

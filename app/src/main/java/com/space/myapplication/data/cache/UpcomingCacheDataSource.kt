@@ -27,3 +27,17 @@ interface UpcomingCacheDataSource {
             }
     }
 }
+
+/*
+interface DataSource<T> {
+    fun getData(): T
+}
+
+interface MutableDataSource<R> {
+    fun save(data: R)
+}
+
+interface CacheDataSource<T, R> : DataSource<T>, MutableDataSource<R>
+interface CloudDataSource<E> : DataSource<E>
+interface UpcomingCacheDataSourceNew : CacheDataSource<List<UpcomingEntity>, List<Upcoming>>
+*/
