@@ -2,6 +2,7 @@ package com.space.myapplication.core
 
 import android.app.Application
 import com.space.myapplication.data.UpcomingCloudDataSource
+import com.space.myapplication.data.UpcomingDataToDomainMapper
 import com.space.myapplication.data.UpcomingListCloudMapper
 import com.space.myapplication.data.UpcomingRepository
 import com.space.myapplication.data.cache.RealmProvider
@@ -10,6 +11,7 @@ import com.space.myapplication.data.cache.UpcomingCacheMapper
 import com.space.myapplication.data.cache.UpcomingListCacheMapper
 import com.space.myapplication.data.net.UpcomingDtoMapper
 import com.space.myapplication.data.net.UpcomingService
+import com.space.myapplication.domain.UpcomingsInteractor
 import retrofit2.Retrofit
 
 class SpaceApp : Application() {
@@ -32,5 +34,7 @@ class SpaceApp : Application() {
             upcomingListCloudMapper,
             upcomingListCacheMapper
         )
+       
+        val upcomingsInteractor = UpcomingsInteractor.Base(upcomingRepository,UpcomingDataToDomainMapper.Base())
     }
 }

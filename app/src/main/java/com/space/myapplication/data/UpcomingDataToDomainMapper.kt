@@ -6,17 +6,12 @@ import com.space.myapplication.data.net.UpcomingDto
 import com.space.myapplication.domain.UpcomingDomain
 import java.lang.Exception
 
-interface UpcomingDataToDomainMapper:Abstract.Mapper {
-    fun map(upcomings: List<Upcoming>):UpcomingDomain
-    fun map(exception: Exception):UpcomingDomain
+interface UpcomingDataToDomainMapper : Abstract.Mapper {
+    fun map(upcomings: List<Upcoming>): UpcomingDomain
+    fun map(exception: Exception): UpcomingDomain
 
-    class Base():UpcomingDataToDomainMapper{
-        override fun map(upcomings: List<Upcoming>): UpcomingDomain {
-            TODO("Not yet implemented")
-        }
-
-        override fun map(exception: Exception): UpcomingDomain {
-            TODO("Not yet implemented")
-        }
+    class Base() : UpcomingDataToDomainMapper {
+        override fun map(upcomings: List<Upcoming>) = UpcomingDomain.Success(upcomings)
+        override fun map(exception: Exception) = UpcomingDomain.Fail(exception)
     }
 }
