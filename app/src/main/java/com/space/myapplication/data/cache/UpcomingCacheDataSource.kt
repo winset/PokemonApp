@@ -19,7 +19,10 @@ interface UpcomingCacheDataSource {
             realmProvider.provide().use { realm ->
                 realm.executeTransaction {
                     upcomingList.forEach { upcoming ->
-                        val upcomingEntity = it.createObject(UpcomingEntity::class.java)
+
+                        val maxId: Number? = it.where(UpcomingEntity::class.java).max("id")
+                        val nextId = if (maxId == null) 1 else maxId.toInt() + 1
+                        val upcomingEntity = it.createObject(UpcomingEntity::class.java,nextId)
                         upcomingEntity.capsule_id = upcoming.capsule_id
                         upcomingEntity.status = upcoming.status
                     }

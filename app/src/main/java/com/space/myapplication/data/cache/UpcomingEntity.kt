@@ -7,6 +7,7 @@ import io.realm.annotations.PrimaryKey
 
 open class UpcomingEntity : RealmObject(), Abstract.Entity<Upcoming, UpcomingCacheMapper> {
     @PrimaryKey
+    var id:Int = -1
     var capsule_id: String = ""
     var status: String = ""
 
