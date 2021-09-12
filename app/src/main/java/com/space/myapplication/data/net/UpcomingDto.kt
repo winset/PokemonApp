@@ -5,13 +5,13 @@ import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.Upcoming
 
 data class UpcomingDto(
-    @SerializedName("capsule_serial")
-    private val capsule_serial: String,
+   /* @SerializedName("capsule_serial")
+    private val capsule_serial: String,*/
     @SerializedName("capsule_id")
     private val capsule_id: String,
     @SerializedName("status")
     private val status: String,
-    @SerializedName("original_launch")
+   /* @SerializedName("original_launch")
     private val original_launch: String,
     @SerializedName("original_launch_unix")
     private val original_launch_unix: String,
@@ -24,7 +24,7 @@ data class UpcomingDto(
     @SerializedName("details")
     private val details: String,
     @SerializedName("reuse_count")
-    private val reuse_count: Int
+    private val reuse_count: Int*/
 ) : Abstract.Object<Upcoming, UpcomingDtoMapper>() {
     override fun map(mapper: UpcomingDtoMapper) = mapper.map(capsule_id, status)
 }
