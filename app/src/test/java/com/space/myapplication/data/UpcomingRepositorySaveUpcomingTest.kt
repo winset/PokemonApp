@@ -2,11 +2,9 @@ package com.space.myapplication.data
 
 import com.space.myapplication.core.Upcoming
 import com.space.myapplication.data.cache.UpcomingCacheDataSource
-import com.space.myapplication.data.cache.UpcomingCacheMapper
 import com.space.myapplication.data.cache.UpcomingEntity
 import com.space.myapplication.data.cache.UpcomingListCacheMapper
 import com.space.myapplication.data.net.UpcomingDto
-import com.space.myapplication.data.net.UpcomingDtoMapper
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -22,7 +20,7 @@ class UpcomingRepositorySaveUpcomingTest : BaseUpcomingRepositoryTest() {
         val repository = UpcomingRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            UpcomingListCloudMapper.Base(TestUpcomingDtoMapper()), // TODO use test mappers
+            UpcomingListCloudMapper.Base(TestUpcomingDtoMapper()),
             UpcomingListCacheMapper.Base(TestUpcomingCacheMapper())
         )
 
