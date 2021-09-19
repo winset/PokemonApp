@@ -3,21 +3,18 @@ package com.space.myapplication.domain
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.Upcoming
 import com.space.myapplication.presentation.ResourceProvider
-import com.space.myapplication.presentation.UpcomingCommunication
-import com.space.myapplication.presentation.UpcomingUi
+import com.space.myapplication.presentation.UpcomingsUi
 
 interface UpcomingsDomainToUiMapper : Abstract.Mapper {
 
-    fun map(upcomings: List<Upcoming>): UpcomingUi
-    fun map(errorType: ErrorType): UpcomingUi
+    fun map(upcomings: List<Upcoming>): UpcomingsUi
+    fun map(errorType: ErrorType): UpcomingsUi
 
     class Base(
-        private val communication: UpcomingCommunication,
         private val resourceProvider: ResourceProvider
     ) : UpcomingsDomainToUiMapper {
-        override fun map(upcomings: List<Upcoming>) = UpcomingUi.Success(communication, upcomings)
-
+        override fun map(upcomings: List<Upcoming>) = UpcomingsUi.Success( upcomings)
         override fun map(errorType: ErrorType) =
-            UpcomingUi.Fail(communication, errorType, resourceProvider)
+            UpcomingsUi.Fail( errorType, resourceProvider)
     }
 }

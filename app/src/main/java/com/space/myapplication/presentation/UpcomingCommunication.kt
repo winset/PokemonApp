@@ -7,30 +7,19 @@ import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.Upcoming
 
 interface UpcomingCommunication : Abstract.Mapper {
-    fun show(upcoming: List<Upcoming>)
-    fun show(errorMsg: String)
+    fun map(upcoming: List<UpcomingUi>)
 
-    fun observeSuccess(owner:LifecycleOwner,observer:Observer<List<Upcoming>>)
-    fun observeFail(owner:LifecycleOwner,observer:Observer<String>)
+    fun observe(owner:LifecycleOwner, observer:Observer<List<UpcomingUi>>)
 
     class Base():UpcomingCommunication{
-        private val successLiveData = MutableLiveData<List<Upcoming>>()
-        private val failLiveData = MutableLiveData<String>()
+        private val listLiveData = MutableLiveData<List<UpcomingUi>>()
 
-        override fun show(upcoming: List<Upcoming>) {
-            successLiveData.value = upcoming
+        override fun map(upcoming: List<UpcomingUi>) {
+            listLiveData.value = upcoming
         }
 
-        override fun show(errorMsg: String) {
-            failLiveData.value = errorMsg
-        }
-
-        override fun observeSuccess(owner: LifecycleOwner, observer: Observer<List<Upcoming>>) {
-            successLiveData.observe(owner,observer)
-        }
-
-        override fun observeFail(owner: LifecycleOwner, observer: Observer<String>) {
-            failLiveData.observe(owner,observer)
+        override fun observe(owner: LifecycleOwner, observer: Observer<List<UpcomingUi>>) {
+            listLiveData.observe(owner,observer)
         }
     }
 }

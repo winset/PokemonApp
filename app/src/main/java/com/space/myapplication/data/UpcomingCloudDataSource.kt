@@ -9,11 +9,13 @@ import com.space.myapplication.data.net.UpcomingService
 interface UpcomingCloudDataSource {
     suspend fun getUpcoming(): List<UpcomingDto>
 
-    class Base(private val service: UpcomingService) : UpcomingCloudDataSource {
-        private val gson = Gson()
+    class Base(private val service: UpcomingService,
+    private val gson: Gson
+               ) : UpcomingCloudDataSource {
+
         private val type = object :TypeToken<List<UpcomingDto>>(){}.type
         override suspend fun getUpcoming(): List<UpcomingDto> {
-            return gson.fromJson<List<UpcomingDto>>(service.getUpcoming().string(),type)
+            return gson.fromJson(service.getUpcoming().string(),type)
         }
     }
 }

@@ -3,6 +3,7 @@ package com.space.myapplication.data.net
 import com.google.gson.annotations.SerializedName
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.Upcoming
+import com.space.myapplication.data.ToUpcomingMapper
 
 data class UpcomingDto(
    /* @SerializedName("capsule_serial")
@@ -25,6 +26,6 @@ data class UpcomingDto(
     private val details: String,
     @SerializedName("reuse_count")
     private val reuse_count: Int*/
-) : Abstract.Object<Upcoming, UpcomingDtoMapper>() {
-    override fun map(mapper: UpcomingDtoMapper) = mapper.map(capsule_id, status)
+) : Abstract.Object<Upcoming, ToUpcomingMapper> {
+    override fun map(mapper: ToUpcomingMapper) = mapper.map(capsule_id, status)
 }

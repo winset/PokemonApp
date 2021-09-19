@@ -1,15 +1,15 @@
 package com.space.myapplication.core
 
 import android.app.Application
+import com.google.gson.Gson
 import com.space.myapplication.data.UpcomingCloudDataSource
 import com.space.myapplication.data.UpcomingDataToDomainMapper
 import com.space.myapplication.data.UpcomingListCloudMapper
 import com.space.myapplication.data.UpcomingRepository
 import com.space.myapplication.data.cache.RealmProvider
 import com.space.myapplication.data.cache.UpcomingCacheDataSource
-import com.space.myapplication.data.cache.UpcomingCacheMapper
 import com.space.myapplication.data.cache.UpcomingListCacheMapper
-import com.space.myapplication.data.net.UpcomingDtoMapper
+import com.space.myapplication.data.ToUpcomingMapper
 import com.space.myapplication.data.net.UpcomingService
 import com.space.myapplication.domain.UpcomingsDomainToUiMapper
 import com.space.myapplication.domain.UpcomingsInteractor
@@ -31,11 +31,12 @@ class SpaceApp : Application() {
             .baseUrl("https://api.spacexdata.com/v3/")
             .build()
         val service = retrofit.create(UpcomingService::class.java)
-
-        val upcomingCloudDataSource = UpcomingCloudDataSource.Base(service)
+        val gson = Gson()
+        val upcomingCloudDataSource = UpcomingCloudDataSource.Base(service,gson)
         val cacheDataSource = UpcomingCacheDataSource.Base(RealmProvider.Base())
-        val upcomingListCloudMapper = UpcomingListCloudMapper.Base(UpcomingDtoMapper.Base())
-        val upcomingListCacheMapper = UpcomingListCacheMapper.Base(UpcomingCacheMapper.Base())
+        val toUpcomingMapper = ToUpcomingMapper.Base()
+        val upcomingListCloudMapper = UpcomingListCloudMapper.Base(toUpcomingMapper)
+        val upcomingListCacheMapper = UpcomingListCacheMapper.Base(toUpcomingMapper)
         val upcomingRepository = UpcomingRepository.Base(
             upcomingCloudDataSource,
             cacheDataSource,
@@ -49,10 +50,7 @@ class SpaceApp : Application() {
         val communication = UpcomingCommunication.Base()
         mainViewModel = MainViewModel(
             upcomingsInteractor,
-            UpcomingsDomainToUiMapper.Base(
-                communication,
-                ResourceProvider.Base(this)
-            ),
+            UpcomingsDomainToUiMapper.Base(ResourceProvider.Base(this)),
             communication
         )
     }

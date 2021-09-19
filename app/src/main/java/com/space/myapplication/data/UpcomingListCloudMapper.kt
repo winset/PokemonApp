@@ -2,15 +2,13 @@ package com.space.myapplication.data
 
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.Upcoming
-import com.space.myapplication.data.net.UpcomingDto
-import com.space.myapplication.data.net.UpcomingDtoMapper
 
 interface UpcomingListCloudMapper : Abstract.Mapper {
-    fun map(cloudList: List<UpcomingDto>): List<Upcoming>
+    fun map(cloudList: List<Abstract.Object<Upcoming, ToUpcomingMapper>>): List<Upcoming>
 
-    class Base(private val upcomingDtoMapper: UpcomingDtoMapper) : UpcomingListCloudMapper {
-        override fun map(cloudList: List<UpcomingDto>) = cloudList.map { upcomingCloud ->
-            upcomingCloud.map(upcomingDtoMapper)
+    class Base(private val toUpcomingMapper: ToUpcomingMapper) : UpcomingListCloudMapper {
+        override fun map(cloudList: List<Abstract.Object<Upcoming, ToUpcomingMapper>>) = cloudList.map { upcomingCloud ->
+            upcomingCloud.map(toUpcomingMapper)
         }
     }
 }
