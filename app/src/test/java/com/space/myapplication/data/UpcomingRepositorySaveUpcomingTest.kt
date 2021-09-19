@@ -20,7 +20,7 @@ class UpcomingRepositorySaveUpcomingTest : BaseUpcomingRepositoryTest() {
         val repository = UpcomingRepository.Base(
             testCloudDataSource,
             testCacheDataSource,
-            UpcomingListCloudMapper.Base(TestUpcomingDtoMapper()),
+            UpcomingListCloudMapper.Base(TestToUpcomingMapper()),
             UpcomingListCacheMapper.Base(TestUpcomingCacheMapper())
         )
 
@@ -78,6 +78,4 @@ class UpcomingRepositorySaveUpcomingTest : BaseUpcomingRepositoryTest() {
             }
         }
     }
-
-
 }

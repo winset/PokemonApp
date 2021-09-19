@@ -13,16 +13,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding  = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val viewModel = (application as SpaceApp).mainViewModel
 
-        val upcomingAdapter = UpcomingAdapter()
+        val upcomingAdapter = UpcomingAdapter(object : UpcomingAdapter.Retry {
+            override fun tryAgain() {
+                viewModel.getUpcomings()
+            }
+        })
+
         binding.upcomingRv.adapter = upcomingAdapter
         viewModel.observe(this, {
             upcomingAdapter.update(it)
         })
         viewModel.getUpcomings()
+
     }
 }

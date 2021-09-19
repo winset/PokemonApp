@@ -4,7 +4,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.Upcoming
 import com.space.myapplication.domain.UpcomingsInteractor
 import com.space.myapplication.domain.UpcomingsDomainToUiMapper
@@ -18,13 +17,18 @@ class MainViewModel(
     private val communication: UpcomingCommunication
 ) : ViewModel() {
 
-    fun getUpcomings() = viewModelScope.launch(Dispatchers.IO) {
-        val result = interactor.getUpcomings()
-        withContext(Dispatchers.Main) {
-            result.map(uiMapper).map(Abstract.Mapper.Empty())
+    fun getUpcomings() {
+        communication.map(listOf(UpcomingUi.Progress))
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = interactor.getUpcomings()
+            val upcomingUi = result.map(uiMapper)
+            withContext(Dispatchers.Main) {
+                upcomingUi.map(communication)
+            }
         }
     }
-    fun observe(owner: LifecycleOwner, observer: Observer<List<Upcoming>>){
-        communication.observeSuccess(owner,observer)
+
+    fun observe(owner: LifecycleOwner, observer: Observer<List<UpcomingUi>>) {
+        communication.observe(owner, observer)
     }
 }

@@ -2,12 +2,12 @@ package com.space.myapplication.domain
 
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.Upcoming
-import com.space.myapplication.presentation.UpcomingUi
+import com.space.myapplication.presentation.UpcomingsUi
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import kotlin.Exception
 
-sealed class UpcomingDomain : Abstract.Object<UpcomingUi, UpcomingsDomainToUiMapper>() {
+sealed class UpcomingDomain : Abstract.Object<UpcomingsUi, UpcomingsDomainToUiMapper> {
 
     class Success(private val upcomings: List<Upcoming>) : UpcomingDomain() {
         override fun map(mapper: UpcomingsDomainToUiMapper) = mapper.map(upcomings)
