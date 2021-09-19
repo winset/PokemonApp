@@ -11,14 +11,22 @@ import com.space.myapplication.data.cache.UpcomingCacheMapper
 import com.space.myapplication.data.cache.UpcomingListCacheMapper
 import com.space.myapplication.data.net.UpcomingDtoMapper
 import com.space.myapplication.data.net.UpcomingService
+import com.space.myapplication.domain.UpcomingsDomainToUiMapper
 import com.space.myapplication.domain.UpcomingsInteractor
+import com.space.myapplication.presentation.MainViewModel
+import com.space.myapplication.presentation.ResourceProvider
+import com.space.myapplication.presentation.UpcomingCommunication
+import io.realm.Realm
 import retrofit2.Retrofit
 
 class SpaceApp : Application() {
 
+    lateinit var mainViewModel: MainViewModel
+
     override fun onCreate() {
         super.onCreate()
 
+        Realm.init(this)
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.spacexdata.com/v3/")
             .build()
@@ -34,7 +42,18 @@ class SpaceApp : Application() {
             upcomingListCloudMapper,
             upcomingListCacheMapper
         )
-       
-        val upcomingsInteractor = UpcomingsInteractor.Base(upcomingRepository,UpcomingDataToDomainMapper.Base())
+
+        val upcomingsInteractor =
+            UpcomingsInteractor.Base(upcomingRepository, UpcomingDataToDomainMapper.Base())
+
+        val communication = UpcomingCommunication.Base()
+        mainViewModel = MainViewModel(
+            upcomingsInteractor,
+            UpcomingsDomainToUiMapper.Base(
+                communication,
+                ResourceProvider.Base(this)
+            ),
+            communication
+        )
     }
 }
