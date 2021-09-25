@@ -10,7 +10,7 @@ import org.junit.Assert.*
 import org.junit.Test
 import java.net.UnknownHostException
 
-class PokemonRepositoryTest : BaseUpcomingRepositoryTest() {
+class PokemonRepositoryTest : BasePokemonRepositoryTest() {
 
     val unknownHostException = UnknownHostException()
 
@@ -25,7 +25,7 @@ class PokemonRepositoryTest : BaseUpcomingRepositoryTest() {
             PokemonsCacheMapper.Base(TestPokemonCacheMapper())
         )
 
-        val actual = repository.getUpcoming()
+        val actual = repository.getPokemon()
         val expected = PokemonsData.Fail(unknownHostException)
         assertEquals(expected, actual)
     }
@@ -41,7 +41,7 @@ class PokemonRepositoryTest : BaseUpcomingRepositoryTest() {
             PokemonsCacheMapper.Base(TestPokemonCacheMapper())
         )
 
-        val actual = repository.getUpcoming()
+        val actual = repository.getPokemon()
         val expected = PokemonsData.Success(
             listOf(
                 PokemonData("Dragon 1", "wait"),
@@ -63,7 +63,7 @@ class PokemonRepositoryTest : BaseUpcomingRepositoryTest() {
             PokemonsCacheMapper.Base(TestPokemonCacheMapper())
         )
 
-        val actual = repository.getUpcoming()
+        val actual = repository.getPokemon()
         val expected = PokemonsData.Success(
             listOf(
                 PokemonData("Dragon 10", "wait"),
@@ -85,7 +85,7 @@ class PokemonRepositoryTest : BaseUpcomingRepositoryTest() {
             PokemonsCacheMapper.Base(TestPokemonCacheMapper())
         )
 
-        val actual = repository.getUpcoming()
+        val actual = repository.getPokemon()
         val expected = PokemonsData.Success(
             listOf(
                 PokemonData("Dragon 10", "wait"),
@@ -99,7 +99,7 @@ class PokemonRepositoryTest : BaseUpcomingRepositoryTest() {
     private inner class TestCloudDataSource(
         private val returnSuccess: Boolean
     ) : PokemonCloudDataSource {
-        override suspend fun getUpcoming(): List<PokemonDto> {
+        override suspend fun getPokemon(): List<PokemonDto> {
             return if (returnSuccess) {
                 listOf(
                     PokemonDto("Dragon 1", "wait"),
@@ -116,7 +116,7 @@ class PokemonRepositoryTest : BaseUpcomingRepositoryTest() {
         private val returnSuccess: Boolean,
     ) : PokemonCacheDataSource {
 
-        override fun getUpcomingList(): List<PokemonEntity> {
+        override fun getPokemonList(): List<PokemonEntity> {
             return if (returnSuccess) {
                 listOf(
                     PokemonEntity().apply {
@@ -140,7 +140,7 @@ class PokemonRepositoryTest : BaseUpcomingRepositoryTest() {
             }
         }
 
-        override fun saveUpcomingList(upcomingList: List<PokemonData>) {
+        override fun savePokemonList(pokemons: List<PokemonData>) {
 
         }
     }

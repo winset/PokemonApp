@@ -10,12 +10,12 @@ import com.space.myapplication.data.cache.PokemonCacheDataSource
 import com.space.myapplication.data.cache.PokemonsCacheMapper
 import com.space.myapplication.data.ToPokemonMapper
 import com.space.myapplication.data.cache.PokemonDataToDbMapper
-import com.space.myapplication.data.net.UpcomingService
+import com.space.myapplication.data.net.PokemonService
 import com.space.myapplication.domain.*
 import com.space.myapplication.presentation.BasePokemonDomainToUiMapper
 import com.space.myapplication.presentation.MainViewModel
 import com.space.myapplication.presentation.ResourceProvider
-import com.space.myapplication.presentation.UpcomingCommunication
+import com.space.myapplication.presentation.PokemonCommunication
 import io.realm.Realm
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -41,29 +41,29 @@ class SpaceApp : Application() {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-        val service = retrofit.create(UpcomingService::class.java)
+        val service = retrofit.create(PokemonService::class.java)
 
-        val upcomingCloudDataSource = PokemonCloudDataSource.Base(service, gson)
+        val pokemonCloudDataSource = PokemonCloudDataSource.Base(service)
         val cacheDataSource =
             PokemonCacheDataSource.Base(RealmProvider.Base(), PokemonDataToDbMapper.Base())
-        val toUpcomingMapper = ToPokemonMapper.Base()
-        val upcomingListCloudMapper = PokemonsCloudMapper.Base(toUpcomingMapper)
-        val upcomingListCacheMapper = PokemonsCacheMapper.Base(toUpcomingMapper)
-        val upcomingRepository = PokemonRepository.Base(
-            upcomingCloudDataSource,
+        val toPokemonMapper = ToPokemonMapper.Base()
+        val pokemonsCloudMapper = PokemonsCloudMapper.Base(toPokemonMapper)
+        val pokemonsCacheMapper = PokemonsCacheMapper.Base(toPokemonMapper)
+        val pokemonRepository = PokemonRepository.Base(
+            pokemonCloudDataSource,
             cacheDataSource,
-            upcomingListCloudMapper,
-            upcomingListCacheMapper
+            pokemonsCloudMapper,
+            pokemonsCacheMapper
         )
 
         val upcomingsInteractor =
             PokemonsInteractor.Base(
-                upcomingRepository, BasePokemonsDataToDomainMapper(
+                pokemonRepository, BasePokemonsDataToDomainMapper(
                     BasePokemonDataToDomainMapper()
                 )
             )
 
-        val communication = UpcomingCommunication.Base()
+        val communication = PokemonCommunication.Base()
         mainViewModel = MainViewModel(
             upcomingsInteractor,
             PokemonsDomainToUiMapper.Base(ResourceProvider.Base(this), BasePokemonDomainToUiMapper()),

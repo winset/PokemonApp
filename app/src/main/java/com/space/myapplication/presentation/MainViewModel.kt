@@ -13,13 +13,13 @@ import kotlinx.coroutines.withContext
 class MainViewModel(
     private val interactor: PokemonsInteractor,
     private val uiMapper: PokemonsDomainToUiMapper,
-    private val communication: UpcomingCommunication
+    private val communication: PokemonCommunication
 ) : ViewModel() {
 
-    fun getUpcomings() {
+    fun getPokemons() {
         communication.map(listOf(PokemonUi.Progress))
         viewModelScope.launch(Dispatchers.IO) {
-            val result = interactor.getUpcomings()
+            val result = interactor.getPokemons()
             val upcomingUi = result.map(uiMapper)
             withContext(Dispatchers.Main) {
                 upcomingUi.map(communication)

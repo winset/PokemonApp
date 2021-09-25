@@ -2,7 +2,6 @@ package com.space.myapplication.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.space.myapplication.R
 import com.space.myapplication.core.SpaceApp
 import com.space.myapplication.databinding.ActivityMainBinding
 
@@ -18,9 +17,9 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel = (application as SpaceApp).mainViewModel
 
-        val upcomingAdapter = UpcomingAdapter(object : UpcomingAdapter.Retry {
+        val upcomingAdapter = PokemonAdapter(object : PokemonAdapter.Retry {
             override fun tryAgain() {
-                viewModel.getUpcomings()
+                viewModel.getPokemons()
             }
         })
 
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.observe(this, {
             upcomingAdapter.update(it)
         })
-        viewModel.getUpcomings()
+        viewModel.getPokemons()
 
     }
 }

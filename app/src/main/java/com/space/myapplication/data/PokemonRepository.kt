@@ -6,7 +6,7 @@ import kotlinx.coroutines.delay
 import java.lang.Exception
 
 interface PokemonRepository {
-    suspend fun getUpcoming(): PokemonsData
+    suspend fun getPokemon(): PokemonsData
 
     class Base(
         private val pokemonCloudDataSource: PokemonCloudDataSource,
@@ -14,13 +14,13 @@ interface PokemonRepository {
         private val pokemonsCloudMapper: PokemonsCloudMapper,
         private val pokemonsCacheMapper: PokemonsCacheMapper
     ) : PokemonRepository {
-        override suspend fun getUpcoming() = try {
+        override suspend fun getPokemon() = try {
             delay(1000)//todo just for test
-            val upcomingCacheList = cacheDataSource.getUpcomingList()
+            val upcomingCacheList = cacheDataSource.getPokemonList()
             if (upcomingCacheList.isEmpty()) {
-                val upcomingCloudList = pokemonCloudDataSource.getUpcoming()
+                val upcomingCloudList = pokemonCloudDataSource.getPokemon()
                 val upcomingList = pokemonsCloudMapper.map(upcomingCloudList)
-                cacheDataSource.saveUpcomingList(upcomingList)
+                cacheDataSource.savePokemonList(upcomingList)
                 PokemonsData.Success(upcomingList)
             } else {
                 PokemonsData.Success(pokemonsCacheMapper.map(upcomingCacheList))

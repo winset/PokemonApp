@@ -1,15 +1,6 @@
 package com.space.myapplication.data
 
-import com.space.myapplication.data.cache.PokemonCacheDataSource
-import com.space.myapplication.data.cache.PokemonEntity
-import com.space.myapplication.data.cache.PokemonsCacheMapper
-import com.space.myapplication.data.net.PokemonDto
-import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import java.net.UnknownHostException
-
-class UpcomingRepositorySavePokemonTest : BaseUpcomingRepositoryTest() {
+class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
 /*    val unknownHostException = UnknownHostException()
 
     @Test

@@ -3,12 +3,12 @@ package com.space.myapplication.data.cache
 import com.space.myapplication.data.PokemonData
 
 interface PokemonCacheDataSource {
-    fun getUpcomingList(): List<PokemonEntity>
-    fun saveUpcomingList(upcomingList: List<PokemonData>)
+    fun getPokemonList(): List<PokemonEntity>
+    fun savePokemonList(pokemonsData: List<PokemonData>)
 
     class Base(private val realmProvider: RealmProvider,
     private val pokemonDataToDbMapper: PokemonDataToDbMapper) : PokemonCacheDataSource {
-        override fun getUpcomingList(): List<PokemonEntity> {
+        override fun getPokemonList(): List<PokemonEntity> {
             realmProvider.provide().use { realm ->
                 val pokemonsEntities =
                     realm.where(PokemonEntity::class.java).findAll() ?: emptyList()
@@ -16,7 +16,7 @@ interface PokemonCacheDataSource {
             }
         }
 
-        override fun saveUpcomingList(pokemonsData: List<PokemonData>) =
+        override fun savePokemonList(pokemonsData: List<PokemonData>) =
             realmProvider.provide().use { realm ->
                 realm.executeTransaction {
                     pokemonsData.forEach { pokemonData ->

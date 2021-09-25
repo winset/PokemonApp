@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.space.myapplication.R
 
-class UpcomingAdapter(private val retry:Retry) : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
+class PokemonAdapter(private val retry:Retry) : RecyclerView.Adapter<PokemonAdapter.UpcomingViewHolder>() {
 
     private val upcomingList = mutableListOf<PokemonUi>()
 
