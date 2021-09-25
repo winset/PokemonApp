@@ -4,21 +4,20 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.space.myapplication.core.Abstract
-import com.space.myapplication.core.Upcoming
 
 interface UpcomingCommunication : Abstract.Mapper {
-    fun map(upcoming: List<UpcomingUi>)
+    fun map(pokemon: List<PokemonUi>)
 
-    fun observe(owner:LifecycleOwner, observer:Observer<List<UpcomingUi>>)
+    fun observe(owner:LifecycleOwner, observer:Observer<List<PokemonUi>>)
 
     class Base():UpcomingCommunication{
-        private val listLiveData = MutableLiveData<List<UpcomingUi>>()
+        private val listLiveData = MutableLiveData<List<PokemonUi>>()
 
-        override fun map(upcoming: List<UpcomingUi>) {
-            listLiveData.value = upcoming
+        override fun map(pokemon: List<PokemonUi>) {
+            listLiveData.value = pokemon
         }
 
-        override fun observe(owner: LifecycleOwner, observer: Observer<List<UpcomingUi>>) {
+        override fun observe(owner: LifecycleOwner, observer: Observer<List<PokemonUi>>) {
             listLiveData.observe(owner,observer)
         }
     }

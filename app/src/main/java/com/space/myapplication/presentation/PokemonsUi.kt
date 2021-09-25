@@ -2,18 +2,19 @@ package com.space.myapplication.presentation
 
 import com.space.myapplication.R
 import com.space.myapplication.core.Abstract
-import com.space.myapplication.core.Upcoming
+import com.space.myapplication.domain.BasePokemonDataToDomainMapper
 import com.space.myapplication.domain.ErrorType
+import com.space.myapplication.domain.PokemonDomain
+import com.space.myapplication.domain.PokemonDomainToUiMapper
 
-sealed class UpcomingsUi : Abstract.Object<Unit, UpcomingCommunication> {
+sealed class PokemonsUi : Abstract.Object<Unit, UpcomingCommunication> {
 
     class Success(
-        private val upcoming: List<Upcoming>
-    ) : UpcomingsUi() {
+        private val upcoming: List<PokemonDomain>,
+        private val pokemonMapper: PokemonDomainToUiMapper
+    ) : PokemonsUi() {
         override fun map(mapper: UpcomingCommunication) {
-            val upcomingsUi  = upcoming.map {
-                UpcomingUi.Base(it.capsule_id,it.status)
-            }
+            val upcomingsUi  = upcoming.map { it.map(pokemonMapper) }
             mapper.map(upcomingsUi)
         }
     }
@@ -21,7 +22,7 @@ sealed class UpcomingsUi : Abstract.Object<Unit, UpcomingCommunication> {
     class Fail(
         private val errorType: ErrorType,
         private val resourceProvider: ResourceProvider
-    ) : UpcomingsUi() {
+    ) : PokemonsUi() {
         override fun map(mapper: UpcomingCommunication) {
             val msgId = when (errorType) { // todo move to other class
                 ErrorType.NO_CONNECTION -> R.string.no_connection
@@ -29,7 +30,7 @@ sealed class UpcomingsUi : Abstract.Object<Unit, UpcomingCommunication> {
                 else -> R.string.something_go_wrong
             }
             val message = resourceProvider.getString(msgId)
-            mapper.map(listOf(UpcomingUi.Fail(message)))
+            mapper.map(listOf(PokemonUi.Fail(message)))
         }
     }
 }

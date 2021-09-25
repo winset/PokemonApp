@@ -2,22 +2,25 @@ package com.space.myapplication.core
 
 import android.app.Application
 import com.google.gson.Gson
-import com.space.myapplication.data.UpcomingCloudDataSource
-import com.space.myapplication.data.UpcomingDataToDomainMapper
-import com.space.myapplication.data.UpcomingListCloudMapper
-import com.space.myapplication.data.UpcomingRepository
+import com.space.myapplication.data.PokemonCloudDataSource
+import com.space.myapplication.data.PokemonsCloudMapper
+import com.space.myapplication.data.PokemonRepository
 import com.space.myapplication.data.cache.RealmProvider
-import com.space.myapplication.data.cache.UpcomingCacheDataSource
-import com.space.myapplication.data.cache.UpcomingListCacheMapper
-import com.space.myapplication.data.ToUpcomingMapper
+import com.space.myapplication.data.cache.PokemonCacheDataSource
+import com.space.myapplication.data.cache.PokemonsCacheMapper
+import com.space.myapplication.data.ToPokemonMapper
+import com.space.myapplication.data.cache.PokemonDataToDbMapper
 import com.space.myapplication.data.net.UpcomingService
-import com.space.myapplication.domain.UpcomingsDomainToUiMapper
-import com.space.myapplication.domain.UpcomingsInteractor
+import com.space.myapplication.domain.*
+import com.space.myapplication.presentation.BasePokemonDomainToUiMapper
 import com.space.myapplication.presentation.MainViewModel
 import com.space.myapplication.presentation.ResourceProvider
 import com.space.myapplication.presentation.UpcomingCommunication
 import io.realm.Realm
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class SpaceApp : Application() {
 
@@ -27,17 +30,26 @@ class SpaceApp : Application() {
         super.onCreate()
 
         Realm.init(this)
+        val client = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+            .build()
+        val gson = Gson()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.spacexdata.com/v3/")
+            .baseUrl("https://pokeapi.co/api/v2/")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         val service = retrofit.create(UpcomingService::class.java)
-        val gson = Gson()
-        val upcomingCloudDataSource = UpcomingCloudDataSource.Base(service,gson)
-        val cacheDataSource = UpcomingCacheDataSource.Base(RealmProvider.Base())
-        val toUpcomingMapper = ToUpcomingMapper.Base()
-        val upcomingListCloudMapper = UpcomingListCloudMapper.Base(toUpcomingMapper)
-        val upcomingListCacheMapper = UpcomingListCacheMapper.Base(toUpcomingMapper)
-        val upcomingRepository = UpcomingRepository.Base(
+
+        val upcomingCloudDataSource = PokemonCloudDataSource.Base(service, gson)
+        val cacheDataSource =
+            PokemonCacheDataSource.Base(RealmProvider.Base(), PokemonDataToDbMapper.Base())
+        val toUpcomingMapper = ToPokemonMapper.Base()
+        val upcomingListCloudMapper = PokemonsCloudMapper.Base(toUpcomingMapper)
+        val upcomingListCacheMapper = PokemonsCacheMapper.Base(toUpcomingMapper)
+        val upcomingRepository = PokemonRepository.Base(
             upcomingCloudDataSource,
             cacheDataSource,
             upcomingListCloudMapper,
@@ -45,12 +57,16 @@ class SpaceApp : Application() {
         )
 
         val upcomingsInteractor =
-            UpcomingsInteractor.Base(upcomingRepository, UpcomingDataToDomainMapper.Base())
+            PokemonsInteractor.Base(
+                upcomingRepository, BasePokemonsDataToDomainMapper(
+                    BasePokemonDataToDomainMapper()
+                )
+            )
 
         val communication = UpcomingCommunication.Base()
         mainViewModel = MainViewModel(
             upcomingsInteractor,
-            UpcomingsDomainToUiMapper.Base(ResourceProvider.Base(this)),
+            PokemonsDomainToUiMapper.Base(ResourceProvider.Base(this), BasePokemonDomainToUiMapper()),
             communication
         )
     }
