@@ -8,20 +8,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.space.myapplication.R
 
-class UpcomingAdapter(private val retry:Retry) : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
+class PokemonAdapter(private val retry:Retry) : RecyclerView.Adapter<PokemonAdapter.UpcomingViewHolder>() {
 
-    private val upcomingList = mutableListOf<UpcomingUi>()
+    private val upcomingList = mutableListOf<PokemonUi>()
 
-    fun update(new: List<UpcomingUi>) {
+    fun update(new: List<PokemonUi>) {
         upcomingList.clear()
         upcomingList.addAll(new)
         notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int) = when (upcomingList[position]) {
-        is UpcomingUi.Base -> 0
-        is UpcomingUi.Fail -> 1
-        is UpcomingUi.Progress -> 2
+        is PokemonUi.Base -> 0
+        is PokemonUi.Fail -> 1
+        is PokemonUi.Progress -> 2
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
@@ -37,14 +37,14 @@ class UpcomingAdapter(private val retry:Retry) : RecyclerView.Adapter<UpcomingAd
     override fun getItemCount() = upcomingList.size
 
     abstract class UpcomingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        open fun bind(upcoming: UpcomingUi) {
+        open fun bind(pokemon: PokemonUi) {
         }
 
         class FullscreenProgress(view: View) : UpcomingViewHolder(view)
         class Base(view: View) : UpcomingViewHolder(view) {
             private val name = itemView.findViewById<TextView>(R.id.textView)
-            override fun bind(upcoming: UpcomingUi) {
-                upcoming.map(object : UpcomingUi.StringMapper {
+            override fun bind(pokemon: PokemonUi) {
+                pokemon.map(object : PokemonUi.StringMapper {
                     override fun map(text: String) {
                         name.text = text
                     }
@@ -55,8 +55,8 @@ class UpcomingAdapter(private val retry:Retry) : RecyclerView.Adapter<UpcomingAd
         class Fail(view: View,private val retry:Retry) : UpcomingViewHolder(view) {
             private val message = itemView.findViewById<TextView>(R.id.fail_message)
             private val tryAgainBtn = itemView.findViewById<Button>(R.id.try_again_btn)
-            override fun bind(upcoming: UpcomingUi) {
-                upcoming.map(object : UpcomingUi.StringMapper {
+            override fun bind(pokemon: PokemonUi) {
+                pokemon.map(object : PokemonUi.StringMapper {
                     override fun map(text: String) {
                         message.text = text
                     }
