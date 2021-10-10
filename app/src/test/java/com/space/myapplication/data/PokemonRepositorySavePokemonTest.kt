@@ -1,7 +1,21 @@
 package com.space.myapplication.data
 
+import com.space.myapplication.data.cache.PokemonCacheDataSource
+import com.space.myapplication.data.cache.PokemonDataToDbMapper
+import com.space.myapplication.data.cache.PokemonEntity
+import com.space.myapplication.data.cache.PokemonsCacheMapper
+import com.space.myapplication.data.net.PokemonDto
+import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.runBlocking
+import org.junit.Test
+import java.net.UnknownHostException
+
+/**
+ * Test for [PokemonRepository]
+ *
+ * **/
 class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
-/*    val unknownHostException = UnknownHostException()
+   val unknownHostException = UnknownHostException()
 
     @Test
     fun test_save_upcomings() = runBlocking {
@@ -14,7 +28,7 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
             PokemonsCacheMapper.Base(TestPokemonCacheMapper())
         )
 
-        val actualCloud = repository.getUpcoming()
+        val actualCloud = repository.getPokemon()
         val expectedCloud = PokemonsData.Success(
             listOf(
                 PokemonData("Dragon 1", "wait"),
@@ -24,7 +38,7 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
         )
         assertEquals(expectedCloud, actualCloud)
 
-        val actualCache = repository.getUpcoming()
+        val actualCache = repository.getPokemon()
         val expectedCache = PokemonsData.Success(
             listOf(
                 PokemonData("Dragon 1 db", "wait"),
@@ -38,7 +52,7 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
     private inner class TestCloudDataSource(
         private val returnSuccess: Boolean
     ) : PokemonCloudDataSource {
-        override suspend fun getUpcoming(): List<PokemonDto> {
+        override suspend fun getPokemon(): List<PokemonDto> {
             return if (returnSuccess) {
                 listOf(
                     PokemonDto("Dragon 1", "wait"),
@@ -55,17 +69,18 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
 
         private val list = mutableListOf<PokemonEntity>()
 
-        override fun getUpcomingList(): List<PokemonEntity> = list
+        override fun getPokemonList(): List<PokemonEntity> = list
 
-        override fun saveUpcomingList(upcomingList: List<PokemonData>) {
+        override fun savePokemonList(pokemonsData: List<PokemonData>) {
             var autoId = -1
-            upcomingList.map { upcoming ->
+            pokemonsData.map { pokemon ->
+                val mapper = PokemonDataToDbMapper.Base()
                 list.add(PokemonEntity().apply {
                     id = autoId++
-                    name = "${upcoming.capsule_id} db"
-                    url = upcoming.status
+             //       name = "${pokemon.mapTo(mapper)} db" //TODO fix it
+               //     url = pokemon.status
                 })
             }
         }
-    }*/
+    }
 }
