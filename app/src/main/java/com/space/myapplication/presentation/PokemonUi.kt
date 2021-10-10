@@ -7,13 +7,13 @@ sealed class PokemonUi : Abstract.Object<Unit, PokemonUi.StringMapper> {
 
     object Progress : PokemonUi()
     class Base(
-        private val capsule_id: String,
-        private val status: String
+        private val name: String,
+        private val url: String
     ) : PokemonUi() {
-        override fun map(mapper: StringMapper) = mapper.map(capsule_id)
+        override fun map(mapper: StringMapper) = mapper.map(name)
     }
 
-    class Fail(private val message: String) : PokemonUi(){
+    data class Fail(private val message: String) : PokemonUi(){
         override fun map(mapper: StringMapper) = mapper.map(message)
     }
 
