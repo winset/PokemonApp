@@ -9,7 +9,10 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
 import org.junit.Test
 import java.net.UnknownHostException
-
+/**
+ * Test for [PokemonRepository]
+ *
+ * **/
 class PokemonRepositoryTest : BasePokemonRepositoryTest() {
 
     val unknownHostException = UnknownHostException()
