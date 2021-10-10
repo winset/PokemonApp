@@ -25,7 +25,7 @@ class PokemonAdapter(private val retry:Retry) : RecyclerView.Adapter<PokemonAdap
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
-        0 -> UpcomingViewHolder.Base(R.layout.upcoming_item.makeView(parent))
+        0 -> UpcomingViewHolder.Base(R.layout.pokemon_item.makeView(parent))
         1 -> UpcomingViewHolder.Fail(R.layout.fail_fullscreen.makeView(parent),retry)
         else -> UpcomingViewHolder.FullscreenProgress(R.layout.progress_fullscreen.makeView(parent))
     }

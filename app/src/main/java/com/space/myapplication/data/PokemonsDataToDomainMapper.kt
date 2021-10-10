@@ -5,6 +5,6 @@ import com.space.myapplication.domain.PokemonsDomain
 import java.lang.Exception
 
 interface PokemonsDataToDomainMapper : Abstract.Mapper {
-    fun map(upcomings: List<PokemonData>): PokemonsDomain
+    fun map(pokemons: List<PokemonData>): PokemonsDomain
     fun map(exception: Exception): PokemonsDomain
 }

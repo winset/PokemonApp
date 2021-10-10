@@ -10,7 +10,7 @@ interface PokemonCommunication : Abstract.Mapper {
 
     fun observe(owner:LifecycleOwner, observer:Observer<List<PokemonUi>>)
 
-    class Base():PokemonCommunication{
+    class Base :PokemonCommunication{
         private val listLiveData = MutableLiveData<List<PokemonUi>>()
 
         override fun map(pokemon: List<PokemonUi>) {

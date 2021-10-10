@@ -2,7 +2,7 @@ package com.space.myapplication.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.space.myapplication.core.SpaceApp
+import com.space.myapplication.core.PokemonApp
 import com.space.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = (application as SpaceApp).mainViewModel
+        val viewModel = (application as PokemonApp).mainViewModel
 
         val upcomingAdapter = PokemonAdapter(object : PokemonAdapter.Retry {
             override fun tryAgain() {

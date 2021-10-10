@@ -12,17 +12,14 @@ import com.space.myapplication.data.ToPokemonMapper
 import com.space.myapplication.data.cache.PokemonDataToDbMapper
 import com.space.myapplication.data.net.PokemonService
 import com.space.myapplication.domain.*
-import com.space.myapplication.presentation.BasePokemonDomainToUiMapper
-import com.space.myapplication.presentation.MainViewModel
-import com.space.myapplication.presentation.ResourceProvider
-import com.space.myapplication.presentation.PokemonCommunication
+import com.space.myapplication.presentation.*
 import io.realm.Realm
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class SpaceApp : Application() {
+class PokemonApp : Application() {
 
     lateinit var mainViewModel: MainViewModel
 
@@ -66,7 +63,7 @@ class SpaceApp : Application() {
         val communication = PokemonCommunication.Base()
         mainViewModel = MainViewModel(
             upcomingsInteractor,
-            PokemonsDomainToUiMapper.Base(ResourceProvider.Base(this), BasePokemonDomainToUiMapper()),
+            BasePokemonsDomainToUiMapper(ResourceProvider.Base(this), BasePokemonDomainToUiMapper()),
             communication
         )
     }
