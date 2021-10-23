@@ -17,17 +17,17 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel = (application as PokemonApp).mainViewModel
 
-        val upcomingAdapter = PokemonAdapter(object : PokemonAdapter.Retry {
+        val retry = object : PokemonAdapter.Retry {
             override fun tryAgain() {
                 viewModel.getPokemons()
             }
-        })
+        }
+        val upcomingAdapter = PokemonAdapter(retry)
 
         binding.upcomingRv.adapter = upcomingAdapter
         viewModel.observe(this, {
             upcomingAdapter.update(it)
         })
         viewModel.getPokemons()
-
     }
 }
