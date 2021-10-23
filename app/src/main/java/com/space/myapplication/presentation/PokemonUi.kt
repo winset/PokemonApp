@@ -10,7 +10,7 @@ sealed class PokemonUi : Abstract.Object<Unit, PokemonUi.StringMapper> {
         private val name: String,
         private val url: String
     ) : PokemonUi() {
-        override fun map(mapper: StringMapper) = mapper.map(name)
+        override fun map(mapper: StringMapper) = mapper.map(name,url)
     }
 
     data class Fail(private val message: String) : PokemonUi(){
@@ -18,6 +18,7 @@ sealed class PokemonUi : Abstract.Object<Unit, PokemonUi.StringMapper> {
     }
 
     interface StringMapper:Abstract.Mapper{
-        fun map(text:String)
+        fun map(text:String,url: String){}
+        fun map(text: String){}
     }
 }
