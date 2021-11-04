@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.space.myapplication.R
 
@@ -23,7 +26,7 @@ class PokemonAdapter(private val retry: Retry) :
     override fun getItemViewType(position: Int) = when (pokemonList[position]) {
         is PokemonUi.Base -> 0
         is PokemonUi.Fail -> 1
-        is PokemonUi.Progress -> 2
+        else -> 2
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
@@ -41,7 +44,12 @@ class PokemonAdapter(private val retry: Retry) :
     abstract class UpcomingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         open fun bind(pokemon: PokemonUi) {}
 
-        class FullscreenProgress(view: View) : UpcomingViewHolder(view)
+        class FullscreenProgress(view: View) : UpcomingViewHolder(view) {
+            init {
+                val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
+                layoutParams.isFullSpan = true
+            }
+        }
 
         class Base(view: View) : UpcomingViewHolder(view) {
             private val name = itemView.findViewById<TextView>(R.id.textView)

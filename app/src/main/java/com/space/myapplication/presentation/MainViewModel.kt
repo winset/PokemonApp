@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.space.myapplication.domain.PokemonsInteractor
 import com.space.myapplication.domain.PokemonsDomainToUiMapper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -16,13 +17,18 @@ class MainViewModel(
     private val communication: PokemonCommunication
 ) : ViewModel() {
 
+    var isLoading = false
+
     fun getPokemons() {
+        isLoading = true
         communication.map(listOf(PokemonUi.Progress))
         viewModelScope.launch(Dispatchers.IO) {
+            delay(5000)
             val result = interactor.getPokemons()
             val upcomingUi = result.map(uiMapper)
             withContext(Dispatchers.Main) {
                 upcomingUi.map(communication)
+                isLoading = false
             }
         }
     }
