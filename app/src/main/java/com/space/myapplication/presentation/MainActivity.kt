@@ -3,6 +3,7 @@ package com.space.myapplication.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.GridLayoutManager
 import com.space.myapplication.core.PokemonApp
 import com.space.myapplication.databinding.ActivityMainBinding
 import com.space.myapplication.utils.RecyclerPaging
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         binding.upcomingRv.adapter = upcomingAdapter
 
         viewModel.observe(this, {
+            if (it.first() is PokemonUi.Progress)
+                binding.upcomingRv.layoutManager = GridLayoutManager(this,1)
+            else
+                binding.upcomingRv.layoutManager = GridLayoutManager(this,2)
             upcomingAdapter.update(it)
         })
         viewModel.getPokemons()
