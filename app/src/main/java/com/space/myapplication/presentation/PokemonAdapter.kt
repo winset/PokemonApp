@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.space.myapplication.R
 
 class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAdapter.UpcomingViewHolder>() {
@@ -51,6 +52,8 @@ class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAda
                         name.text = text
                         Glide.with(itemView)
                             .load(url)
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                            .placeholder(R.drawable.ic_wolf_head_silhouette_png_24)
                             .into(image)
                     }
                 })

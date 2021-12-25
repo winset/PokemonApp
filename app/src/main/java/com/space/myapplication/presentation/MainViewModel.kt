@@ -1,5 +1,6 @@
 package com.space.myapplication.presentation
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -19,12 +20,10 @@ class MainViewModel(
 
     var isLoading = false
 
-    fun getPokemons() {
+    fun getPokemons(page: Int = 0) {
         isLoading = true
-        communication.map(listOf(PokemonUi.Progress))
         viewModelScope.launch(Dispatchers.IO) {
-            delay(5000)
-            val result = interactor.getPokemons()
+            val result = interactor.getPokemons(page)
             val upcomingUi = result.map(uiMapper)
             withContext(Dispatchers.Main) {
                 upcomingUi.map(communication)

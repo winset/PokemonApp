@@ -12,10 +12,10 @@ data class PokemonData(
 ) : ToPokemonDb<PokemonEntity, PokemonDataToDbMapper>,
     Abstract.Object<PokemonDomain, PokemonDataToDomainMapper> {
     override fun map(mapper: PokemonDataToDomainMapper) = mapper.map(name, url)
-    override fun mapTo(mapper: PokemonDataToDbMapper, realm: Realm) = mapper.mapToDB(name, url, realm)
+    override fun mapTo(mapper: PokemonDataToDbMapper, realm: Realm,page:Int) = mapper.mapToDB(name, url,page, realm)
 }
 
 interface ToPokemonDb<T, M : Abstract.Mapper> {
-    fun mapTo(mapper: M, realm: Realm): T
+    fun mapTo(mapper: M, realm: Realm,page:Int): T
 }
 

@@ -8,9 +8,10 @@ import io.realm.annotations.PrimaryKey
 
 open class PokemonEntity : RealmObject(), Abstract.Object<PokemonData, ToPokemonMapper> {
     @PrimaryKey
-    var id:Int = -1
+    var id: Int = -1
     var name: String = ""
     var url: String = ""
+    var page: Int = 0
 
     override fun map(mapper: ToPokemonMapper) = PokemonData(name, url)
 }

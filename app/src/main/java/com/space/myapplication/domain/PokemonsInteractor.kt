@@ -4,12 +4,12 @@ import com.space.myapplication.data.PokemonsDataToDomainMapper
 import com.space.myapplication.data.PokemonRepository
 
 interface PokemonsInteractor {
-    suspend fun getPokemons(): PokemonsDomain
+    suspend fun getPokemons(page:Int): PokemonsDomain
 
     class Base(
         private val pokemonRepository: PokemonRepository,
         private val mapper: PokemonsDataToDomainMapper
     ) : PokemonsInteractor {
-        override suspend fun getPokemons() = pokemonRepository.getPokemon().map(mapper)
+        override suspend fun getPokemons(page:Int) = pokemonRepository.getPokemon(page).map(mapper)
     }
 }
