@@ -12,13 +12,13 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = (application as PokemonApp).mainViewModel
+        viewModel = (application as PokemonApp).mainViewModel
 
         val retry = object : PokemonAdapter.Retry {
             override fun tryAgain() {
@@ -29,18 +29,15 @@ class MainActivity : AppCompatActivity() {
 
         RecyclerPaging(binding.upcomingRv, ::loadMore, { viewModel.isLoading })
         binding.upcomingRv.adapter = upcomingAdapter
-
+        binding.upcomingRv.layoutManager = GridLayoutManager(this, 2)
         viewModel.observe(this, {
-            if (it.first() is PokemonUi.Progress)
-                binding.upcomingRv.layoutManager = GridLayoutManager(this,1)
-            else
-                binding.upcomingRv.layoutManager = GridLayoutManager(this,2)
             upcomingAdapter.update(it)
         })
         viewModel.getPokemons()
     }
 
-    private fun loadMore(count: Int) {
-        //Log.d("TAG", "loadMore: $count")
+    private fun loadMore(page: Int) {
+        viewModel.getPokemons(page)
+        Log.d("TAG", "loadMore: $page")
     }
 }

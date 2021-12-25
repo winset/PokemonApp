@@ -3,24 +3,27 @@ package com.space.myapplication.data.cache
 import com.space.myapplication.data.PokemonData
 
 interface PokemonCacheDataSource {
-    fun getPokemonList(): List<PokemonEntity>
-    fun savePokemonList(pokemonsData: List<PokemonData>)
+    fun getPokemonList(page: Int): List<PokemonEntity>
+    fun savePokemonList(pokemonsData: List<PokemonData>,page:Int)
 
-    class Base(private val realmProvider: RealmProvider,
-    private val pokemonDataToDbMapper: PokemonDataToDbMapper) : PokemonCacheDataSource {
-        override fun getPokemonList(): List<PokemonEntity> {
+    class Base(
+        private val realmProvider: RealmProvider,
+        private val pokemonDataToDbMapper: PokemonDataToDbMapper
+    ) : PokemonCacheDataSource {
+        override fun getPokemonList(page: Int): List<PokemonEntity> {
             realmProvider.provide().use { realm ->
                 val pokemonsEntities =
-                    realm.where(PokemonEntity::class.java).findAll() ?: emptyList()
+                    realm.where(PokemonEntity::class.java).equalTo("page", page).findAll()
+                        ?: emptyList()
                 return realm.copyFromRealm(pokemonsEntities)
             }
         }
 
-        override fun savePokemonList(pokemonsData: List<PokemonData>) =
+        override fun savePokemonList(pokemonsData: List<PokemonData>,page:Int) =
             realmProvider.provide().use { realm ->
                 realm.executeTransaction {
                     pokemonsData.forEach { pokemonData ->
-                        pokemonData.mapTo(pokemonDataToDbMapper,it)
+                        pokemonData.mapTo(pokemonDataToDbMapper, it,page)
                     }
                 }
             }
