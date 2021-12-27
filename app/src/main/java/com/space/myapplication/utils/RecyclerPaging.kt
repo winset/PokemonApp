@@ -9,12 +9,11 @@ import java.lang.IllegalArgumentException
 
 class RecyclerPaging(
     recycler: RecyclerView,
-    private val loadMore: (Int) -> Unit,
-    private val isLoading:()->Boolean
+    private val loadMore: (Int) -> Unit
 ) : RecyclerView.OnScrollListener() {
 
     var currentPage = 0
-    var threshold = 15
+    var threshold = 5
 
     init {
         recycler.addOnScrollListener(this)

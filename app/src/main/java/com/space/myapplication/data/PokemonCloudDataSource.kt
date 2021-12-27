@@ -8,7 +8,7 @@ interface PokemonCloudDataSource {
 
     class Base(private val service: PokemonService) : PokemonCloudDataSource {
         override suspend fun getPokemon(page: Int): List<PokemonDto> {
-            return service.getPokemon(offset = (page+1) * 20).results
+            return service.getPokemon(offset = (page) * 20).results
         }
     }
 }
