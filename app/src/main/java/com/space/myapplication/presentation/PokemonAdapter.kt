@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -15,9 +16,11 @@ class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAda
     private val pokemonList = mutableListOf<PokemonUi>()
 
     fun update(new: List<PokemonUi>) {
+        val diffUtilCallback = DiffUtilCallback(new,pokemonList)
+        val result = DiffUtil.calculateDiff(diffUtilCallback)
         pokemonList.clear()
         pokemonList.addAll(new)
-        notifyDataSetChanged()
+        result.dispatchUpdatesTo(this)
     }
 
     override fun getItemViewType(position: Int) = when (pokemonList[position]) {

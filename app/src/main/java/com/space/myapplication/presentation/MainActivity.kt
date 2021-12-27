@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         }
         val upcomingAdapter = PokemonAdapter(retry)
 
-        RecyclerPaging(binding.upcomingRv, ::loadMore, { viewModel.isLoading })
+        RecyclerPaging(binding.upcomingRv, ::loadMore)
         binding.upcomingRv.adapter = upcomingAdapter
         binding.upcomingRv.layoutManager = GridLayoutManager(this, 2)
         viewModel.observe(this, {
