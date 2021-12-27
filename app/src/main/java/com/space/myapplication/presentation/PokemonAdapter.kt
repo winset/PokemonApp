@@ -53,7 +53,7 @@ class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAda
                         Glide.with(itemView)
                             .load(url)
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                            .placeholder(R.drawable.ic_wolf_head_silhouette_png_24)
+                            .placeholder(R.drawable.pokemon_placeholder)
                             .into(image)
                     }
                 })
