@@ -2,7 +2,6 @@ package com.space.myapplication.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import com.space.myapplication.core.PokemonApp
 import com.space.myapplication.databinding.ActivityMainBinding
@@ -36,8 +35,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.getPokemons()
     }
 
-    private fun loadMore(page: Int) {
-        viewModel.getPokemons(page)
-        Log.d("TAG", "loadMore: $page")
+    private fun loadMore() {
+        viewModel.getPokemons()
     }
 }

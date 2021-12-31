@@ -18,12 +18,20 @@ class MainViewModel(
     private val communication: PokemonCommunication
 ) : ViewModel() {
 
-    fun getPokemons(page: Int = 0) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = interactor.getPokemons(page)
-            val upcomingUi = result.map(uiMapper)
-            withContext(Dispatchers.Main) {
-                upcomingUi.map(communication)
+    private var isLoading = false
+    private var page = 0
+
+    fun getPokemons() {
+        if (!isLoading) {
+            isLoading = true
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = interactor.getPokemons(page)
+                val upcomingUi = result.map(uiMapper)
+                withContext(Dispatchers.Main) {
+                    upcomingUi.map(communication)
+                    page++
+                    isLoading = false
+                }
             }
         }
     }
