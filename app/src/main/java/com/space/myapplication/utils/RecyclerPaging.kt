@@ -1,6 +1,5 @@
 package com.space.myapplication.utils
 
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,11 +8,9 @@ import java.lang.IllegalArgumentException
 
 class RecyclerPaging(
     recycler: RecyclerView,
-    private val loadMore: (Int) -> Unit
+    private val loadMore: () -> Unit,
+    private var threshold: Int = 5
 ) : RecyclerView.OnScrollListener() {
-
-    var currentPage = 0
-    var threshold = 5
 
     init {
         recycler.addOnScrollListener(this)
@@ -21,7 +18,7 @@ class RecyclerPaging(
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-        if (dy>0){
+        if (dy > 0) {
             recyclerView.layoutManager?.let {
                 val totalItemsCount = it.itemCount
                 val pastVisibleItemPosition = when (it) {
@@ -34,7 +31,7 @@ class RecyclerPaging(
                 }
 
                 if ((threshold + pastVisibleItemPosition) >= totalItemsCount) {
-                    loadMore(++currentPage)
+                    loadMore()
                 }
             }
         }
