@@ -3,6 +3,7 @@ package com.space.myapplication.data.pokemons.cache
 import com.space.myapplication.core.DbWrapper
 import com.space.myapplication.data.pokemons.PokemonData
 import io.realm.Realm
+import io.realm.Sort
 
 interface PokemonCacheDataSource {
     fun getPokemonList(page: Int): List<PokemonEntity>

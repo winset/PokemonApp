@@ -15,7 +15,6 @@ interface PokemonRepository {
         private val pokemonsCacheMapper: PokemonsCacheMapper
     ) : PokemonRepository {
         override suspend fun getPokemon(page:Int) = try {
-            delay(1000)//todo just for test
             val upcomingCacheList = cacheDataSource.getPokemonList(page)
             if (upcomingCacheList.isEmpty()) {
                 val upcomingCloudList = pokemonCloudDataSource.getPokemon(page)

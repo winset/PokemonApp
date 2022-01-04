@@ -9,7 +9,8 @@ interface PokemonDataToDbMapper : Abstract.Mapper {
 
     class Base : PokemonDataToDbMapper {
         override fun mapToDB(name: String, url: String, page: Int, dbWrapper: DbWrapper<PokemonEntity>): PokemonEntity {
-            val pokemonEntity = dbWrapper.createObject(name)
+            val pokemonEntity = dbWrapper.createObjectAutoIncremented("id")
+            pokemonEntity.name = name
             pokemonEntity.url = url
             pokemonEntity.page = page
             return pokemonEntity

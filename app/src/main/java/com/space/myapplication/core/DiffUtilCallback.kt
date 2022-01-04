@@ -1,15 +1,15 @@
-package com.space.myapplication.presentation
+package com.space.myapplication.core
 
 import androidx.recyclerview.widget.DiffUtil
 
-class DiffUtilCallback(
-    private val newList: List<PokemonUi>,
-    private val oldList: List<PokemonUi>
+class DiffUtilCallback<T : Comparing<T>>(
+    private val newList: List<T>,
+    private val oldList: List<T>
 ) : DiffUtil.Callback() {
     override fun getOldListSize() = oldList.size
     override fun getNewListSize() = newList.size
 
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int)=
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
         oldList[oldItemPosition].same(newList[newItemPosition])
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
