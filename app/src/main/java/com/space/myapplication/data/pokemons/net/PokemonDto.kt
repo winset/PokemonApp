@@ -1,9 +1,9 @@
-package com.space.myapplication.data.net
+package com.space.myapplication.data.pokemons.net
 
 import com.google.gson.annotations.SerializedName
 import com.space.myapplication.core.Abstract
-import com.space.myapplication.data.PokemonData
-import com.space.myapplication.data.ToPokemonMapper
+import com.space.myapplication.data.pokemons.PokemonData
+import com.space.myapplication.data.pokemons.ToPokemonMapper
 
 data class PokemonDto(
     @SerializedName("name")

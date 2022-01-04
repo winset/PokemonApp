@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.space.myapplication.R
+import com.space.myapplication.core.DiffUtilCallback
 
 class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAdapter.UpcomingViewHolder>() {
     private val pokemonList = mutableListOf<PokemonUi>()

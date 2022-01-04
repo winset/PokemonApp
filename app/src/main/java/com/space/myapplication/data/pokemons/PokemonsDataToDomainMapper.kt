@@ -1,4 +1,4 @@
-package com.space.myapplication.data
+package com.space.myapplication.data.pokemons
 
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.domain.PokemonsDomain

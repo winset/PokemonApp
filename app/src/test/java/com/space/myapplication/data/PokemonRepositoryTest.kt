@@ -1,10 +1,11 @@
 package com.space.myapplication.data
 
 
-import com.space.myapplication.data.cache.PokemonCacheDataSource
-import com.space.myapplication.data.cache.PokemonEntity
-import com.space.myapplication.data.cache.PokemonsCacheMapper
-import com.space.myapplication.data.net.PokemonDto
+import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
+import com.space.myapplication.data.pokemons.cache.PokemonEntity
+import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
+import com.space.myapplication.data.pokemons.net.PokemonDto
+import com.space.myapplication.data.pokemons.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
 import org.junit.Test
@@ -123,17 +124,14 @@ class PokemonRepositoryTest : BasePokemonRepositoryTest() {
             return if (returnSuccess) {
                 listOf(
                     PokemonEntity().apply {
-                        id = 1
                         name = "Dragon 10"
                         url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"
                     },
                     PokemonEntity().apply {
-                        id = 2
                         name = "Dragon 20"
                         url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"
                     },
                     PokemonEntity().apply {
-                        id = 3
                         name = "Dragon 30"
                         url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png"
                     }

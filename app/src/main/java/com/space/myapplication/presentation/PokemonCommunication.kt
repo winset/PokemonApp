@@ -15,8 +15,12 @@ interface PokemonCommunication : Abstract.Mapper {
         private val listPokemon = mutableListOf<PokemonUi>()
 
         override fun map(pokemon: List<PokemonUi>) {
-            listPokemon.addAll(pokemon)
-            listLiveData.value = listPokemon
+            if (pokemon.firstOrNull() is PokemonUi.Base) {
+                listPokemon.addAll(pokemon)
+                listLiveData.value = listPokemon
+            } else {
+                listLiveData.value = pokemon
+            }
         }
 
         override fun observe(owner: LifecycleOwner, observer: Observer<List<PokemonUi>>) {

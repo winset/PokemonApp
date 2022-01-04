@@ -1,10 +1,13 @@
-package com.space.myapplication.data.cache
+package com.space.myapplication.data.pokemons.cache
 
-import com.space.myapplication.data.PokemonData
+import com.space.myapplication.core.DbWrapper
+import com.space.myapplication.data.pokemons.PokemonData
+import io.realm.Realm
+import io.realm.Sort
 
 interface PokemonCacheDataSource {
     fun getPokemonList(page: Int): List<PokemonEntity>
-    fun savePokemonList(pokemonsData: List<PokemonData>,page:Int)
+    fun savePokemonList(pokemonsData: List<PokemonData>, page: Int)
 
     class Base(
         private val realmProvider: RealmProvider,
@@ -19,14 +22,19 @@ interface PokemonCacheDataSource {
             }
         }
 
-        override fun savePokemonList(pokemonsData: List<PokemonData>,page:Int) =
+        override fun savePokemonList(pokemonsData: List<PokemonData>, page: Int) =
             realmProvider.provide().use { realm ->
                 realm.executeTransaction {
                     pokemonsData.forEach { pokemonData ->
-                        pokemonData.mapTo(pokemonDataToDbMapper, it,page)
+                        pokemonData.mapTo(pokemonDataToDbMapper, PokemonDbWrapper(it), page)
                     }
                 }
             }
+
+        private inner class PokemonDbWrapper(realm: Realm) :
+            DbWrapper.Base<PokemonEntity>(realm) {
+            override fun dbClass(): Class<PokemonEntity> = PokemonEntity::class.java
+        }
     }
 }
 

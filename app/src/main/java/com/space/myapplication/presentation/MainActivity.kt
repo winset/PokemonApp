@@ -3,9 +3,10 @@ package com.space.myapplication.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.space.myapplication.core.PokemonApp
 import com.space.myapplication.databinding.ActivityMainBinding
-import com.space.myapplication.utils.RecyclerPaging
+import com.space.myapplication.core.RecyclerPaging
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         RecyclerPaging(binding.upcomingRv, ::loadMore)
         binding.upcomingRv.adapter = upcomingAdapter
-        binding.upcomingRv.layoutManager = GridLayoutManager(this, 2)
+        binding.upcomingRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
         viewModel.observe(this, {
             upcomingAdapter.update(it)
         })

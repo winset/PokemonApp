@@ -1,7 +1,7 @@
-package com.space.myapplication.data
+package com.space.myapplication.data.pokemons
 
-import com.space.myapplication.data.net.PokemonDto
-import com.space.myapplication.data.net.PokemonService
+import com.space.myapplication.data.pokemons.net.PokemonDto
+import com.space.myapplication.data.pokemons.net.PokemonService
 
 interface PokemonCloudDataSource {
     suspend fun getPokemon(page: Int): List<PokemonDto>

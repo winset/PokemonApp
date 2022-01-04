@@ -1,14 +1,12 @@
 package com.space.myapplication.presentation
 
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.space.myapplication.domain.PokemonsInteractor
 import com.space.myapplication.domain.PokemonsDomainToUiMapper
+import com.space.myapplication.domain.PokemonsInteractor
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

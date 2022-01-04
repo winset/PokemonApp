@@ -1,4 +1,4 @@
-package com.space.myapplication.utils
+package com.space.myapplication.core
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager

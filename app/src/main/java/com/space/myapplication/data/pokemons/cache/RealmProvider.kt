@@ -1,4 +1,4 @@
-package com.space.myapplication.data.cache
+package com.space.myapplication.data.pokemons.cache
 
 import io.realm.Realm
 

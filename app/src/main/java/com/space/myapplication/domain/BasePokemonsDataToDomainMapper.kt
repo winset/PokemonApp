@@ -1,9 +1,9 @@
 package com.space.myapplication.domain
 
 
-import com.space.myapplication.data.PokemonData
-import com.space.myapplication.data.PokemonDataToDomainMapper
-import com.space.myapplication.data.PokemonsDataToDomainMapper
+import com.space.myapplication.data.pokemons.PokemonData
+import com.space.myapplication.data.pokemons.PokemonDataToDomainMapper
+import com.space.myapplication.data.pokemons.PokemonsDataToDomainMapper
 import retrofit2.HttpException
 import java.lang.Exception
 import java.net.UnknownHostException
