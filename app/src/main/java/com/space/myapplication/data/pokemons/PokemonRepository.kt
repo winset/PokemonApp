@@ -1,7 +1,7 @@
-package com.space.myapplication.data
+package com.space.myapplication.data.pokemons
 
-import com.space.myapplication.data.cache.PokemonCacheDataSource
-import com.space.myapplication.data.cache.PokemonsCacheMapper
+import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
+import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
 import kotlinx.coroutines.delay
 import java.lang.Exception
 

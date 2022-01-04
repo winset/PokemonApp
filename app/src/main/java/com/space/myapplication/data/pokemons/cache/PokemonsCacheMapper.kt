@@ -1,8 +1,8 @@
-package com.space.myapplication.data.cache
+package com.space.myapplication.data.pokemons.cache
 
 import com.space.myapplication.core.Abstract
-import com.space.myapplication.data.PokemonData
-import com.space.myapplication.data.ToPokemonMapper
+import com.space.myapplication.data.pokemons.PokemonData
+import com.space.myapplication.data.pokemons.ToPokemonMapper
 
 interface PokemonsCacheMapper {
     fun map(pokemonEntityList: List<Abstract.Object<PokemonData, ToPokemonMapper>>): List<PokemonData>

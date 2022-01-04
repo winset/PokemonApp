@@ -1,10 +1,10 @@
-package com.space.myapplication.data
+package com.space.myapplication.data.pokemons
 
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.domain.PokemonsDomain
 
 sealed class PokemonsData : Abstract.Object<PokemonsDomain, PokemonsDataToDomainMapper> {
-    data class Success(private val pokemons: List<PokemonData>):PokemonsData(){
+    data class Success(private val pokemons: List<PokemonData>): PokemonsData(){
         override fun map(mapper: PokemonsDataToDomainMapper): PokemonsDomain {
             return mapper.map(pokemons)
         }

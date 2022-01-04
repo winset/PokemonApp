@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/ic_wolf_head_silhouette_png_24.xml" value="0.228125" />
         <entry key="app/src/main/res/drawable/pokemon_placeholder.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/fail_fullscreen.xml" value="0.18072916666666666" />
+        <entry key="app/src/main/res/layout/pokemon_item.xml" value="0.8305651956537489" />
         <entry key="app/src/main/res/layout/progress_fullscreen.xml" value="0.18072916666666666" />
       </map>
     </option>

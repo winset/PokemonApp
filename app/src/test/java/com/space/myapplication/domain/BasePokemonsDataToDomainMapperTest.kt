@@ -1,7 +1,7 @@
 package com.space.myapplication.domain
 
-import com.space.myapplication.data.PokemonData
-import com.space.myapplication.data.PokemonDataToDomainMapper
+import com.space.myapplication.data.pokemons.PokemonData
+import com.space.myapplication.data.pokemons.PokemonDataToDomainMapper
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 import java.lang.IllegalStateException

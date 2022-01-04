@@ -1,4 +1,4 @@
-package com.space.myapplication.data.net
+package com.space.myapplication.data.pokemons.net
 
 import com.google.gson.annotations.SerializedName
 

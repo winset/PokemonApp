@@ -2,15 +2,15 @@ package com.space.myapplication.core
 
 import android.app.Application
 import com.google.gson.Gson
-import com.space.myapplication.data.PokemonCloudDataSource
-import com.space.myapplication.data.PokemonsCloudMapper
-import com.space.myapplication.data.PokemonRepository
-import com.space.myapplication.data.cache.RealmProvider
-import com.space.myapplication.data.cache.PokemonCacheDataSource
-import com.space.myapplication.data.cache.PokemonsCacheMapper
-import com.space.myapplication.data.ToPokemonMapper
-import com.space.myapplication.data.cache.PokemonDataToDbMapper
-import com.space.myapplication.data.net.PokemonService
+import com.space.myapplication.data.pokemons.PokemonCloudDataSource
+import com.space.myapplication.data.pokemons.PokemonsCloudMapper
+import com.space.myapplication.data.pokemons.PokemonRepository
+import com.space.myapplication.data.pokemons.cache.RealmProvider
+import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
+import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
+import com.space.myapplication.data.pokemons.ToPokemonMapper
+import com.space.myapplication.data.pokemons.cache.PokemonDataToDbMapper
+import com.space.myapplication.data.pokemons.net.PokemonService
 import com.space.myapplication.domain.*
 import com.space.myapplication.presentation.*
 import io.realm.Realm

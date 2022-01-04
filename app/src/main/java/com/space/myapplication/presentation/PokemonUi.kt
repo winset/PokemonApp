@@ -2,10 +2,8 @@ package com.space.myapplication.presentation
 
 import com.space.myapplication.core.Abstract
 
-sealed class PokemonUi : Abstract.Object<Unit, PokemonUi.StringMapper> {
+sealed class PokemonUi : Abstract.Object<Unit, PokemonUi.StringMapper>, Comparing {
     override fun map(mapper: StringMapper) = Unit
-    open fun same(pokemonUi: PokemonUi) = false
-    open fun sameContent(pokemonUi: PokemonUi) = false
 
     object Progress : PokemonUi()
     class Base(
@@ -27,4 +25,9 @@ sealed class PokemonUi : Abstract.Object<Unit, PokemonUi.StringMapper> {
         fun map(text: String, url: String) {}
         fun map(text: String) {}
     }
+}
+
+interface Comparing {
+    fun same(pokemonUi: PokemonUi) = false
+    fun sameContent(pokemonUi: PokemonUi) = false
 }
