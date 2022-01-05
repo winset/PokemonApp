@@ -1,4 +1,4 @@
-package com.space.myapplication.domain
+package com.space.myapplication.domain.pokemons
 
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.presentation.PokemonsUi
