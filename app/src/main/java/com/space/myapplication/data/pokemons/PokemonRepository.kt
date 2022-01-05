@@ -2,7 +2,6 @@ package com.space.myapplication.data.pokemons
 
 import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
 import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
-import kotlinx.coroutines.delay
 import java.lang.Exception
 
 interface PokemonRepository {
@@ -15,14 +14,14 @@ interface PokemonRepository {
         private val pokemonsCacheMapper: PokemonsCacheMapper
     ) : PokemonRepository {
         override suspend fun getPokemon(page:Int) = try {
-            val upcomingCacheList = cacheDataSource.getPokemonList(page)
-            if (upcomingCacheList.isEmpty()) {
+            val pokemonEntityList = cacheDataSource.getPokemonList(page)
+            if (pokemonEntityList.isEmpty()) {
                 val upcomingCloudList = pokemonCloudDataSource.getPokemon(page)
                 val upcomingList = pokemonsCloudMapper.map(upcomingCloudList)
                 cacheDataSource.savePokemonList(upcomingList,page)
                 PokemonsData.Success(upcomingList)
             } else {
-                PokemonsData.Success(pokemonsCacheMapper.map(upcomingCacheList))
+                PokemonsData.Success(pokemonsCacheMapper.map(pokemonEntityList))
             }
         } catch (exception: Exception) {
             PokemonsData.Fail(exception)

@@ -5,13 +5,14 @@ import com.google.gson.Gson
 import com.space.myapplication.data.pokemons.PokemonCloudDataSource
 import com.space.myapplication.data.pokemons.PokemonsCloudMapper
 import com.space.myapplication.data.pokemons.PokemonRepository
-import com.space.myapplication.data.pokemons.cache.RealmProvider
 import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
 import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
 import com.space.myapplication.data.pokemons.ToPokemonMapper
 import com.space.myapplication.data.pokemons.cache.PokemonDataToDbMapper
-import com.space.myapplication.data.pokemons.net.PokemonService
-import com.space.myapplication.domain.*
+import com.space.myapplication.data.pokemons.cloud.PokemonService
+import com.space.myapplication.domain.pokemons.BasePokemonDataToDomainMapper
+import com.space.myapplication.domain.pokemons.BasePokemonsDataToDomainMapper
+import com.space.myapplication.domain.pokemons.PokemonsInteractor
 import com.space.myapplication.presentation.*
 import io.realm.Realm
 import okhttp3.OkHttpClient

@@ -1,4 +1,4 @@
-package com.space.myapplication.data.pokemons.net
+package com.space.myapplication.data.pokemons.cloud
 
 import retrofit2.http.GET
 import retrofit2.http.Query

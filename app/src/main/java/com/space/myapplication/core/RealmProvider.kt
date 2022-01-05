@@ -1,11 +1,11 @@
-package com.space.myapplication.data.pokemons.cache
+package com.space.myapplication.core
 
 import io.realm.Realm
 
 interface RealmProvider {
     fun provide():Realm
 
-    class Base:RealmProvider{
+    class Base: RealmProvider {
         override fun provide(): Realm = Realm.getDefaultInstance()
     }
 }

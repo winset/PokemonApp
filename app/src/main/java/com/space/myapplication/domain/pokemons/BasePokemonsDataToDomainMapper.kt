@@ -1,5 +1,4 @@
-package com.space.myapplication.domain
-
+package com.space.myapplication.domain.pokemons
 
 import com.space.myapplication.data.pokemons.PokemonData
 import com.space.myapplication.data.pokemons.PokemonDataToDomainMapper

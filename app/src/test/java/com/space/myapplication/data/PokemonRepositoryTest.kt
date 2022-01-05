@@ -4,7 +4,7 @@ package com.space.myapplication.data
 import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
 import com.space.myapplication.data.pokemons.cache.PokemonEntity
 import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
-import com.space.myapplication.data.pokemons.net.PokemonDto
+import com.space.myapplication.data.pokemons.cloud.PokemonDto
 import com.space.myapplication.data.pokemons.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*

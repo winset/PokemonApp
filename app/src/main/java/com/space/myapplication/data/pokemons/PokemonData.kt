@@ -4,8 +4,7 @@ import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.DbWrapper
 import com.space.myapplication.data.pokemons.cache.PokemonDataToDbMapper
 import com.space.myapplication.data.pokemons.cache.PokemonEntity
-import com.space.myapplication.domain.PokemonDomain
-import io.realm.Realm
+import com.space.myapplication.domain.pokemons.PokemonDomain
 
 data class PokemonData(
     private val name: String,
