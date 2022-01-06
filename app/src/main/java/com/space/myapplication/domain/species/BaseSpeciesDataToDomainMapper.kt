@@ -1,7 +1,10 @@
 package com.space.myapplication.domain.species
 
 import com.space.myapplication.data.species.SpeciesDataToDomainMapper
+import com.space.myapplication.domain.ErrorType
+import retrofit2.HttpException
 import java.lang.Exception
+import java.net.UnknownHostException
 
 class BaseSpeciesDataToDomainMapper : SpeciesDataToDomainMapper {
     override fun map(
@@ -20,7 +23,7 @@ class BaseSpeciesDataToDomainMapper : SpeciesDataToDomainMapper {
         hasGenderDifferences: Boolean,
         hatchCounter: Int,
         order: Int
-    ): SpeciesDomain = SpeciesDomain(
+    ): SpeciesDomain = SpeciesDomain.Success(
         id,
         isBaby,
         isLegendary,
@@ -38,7 +41,11 @@ class BaseSpeciesDataToDomainMapper : SpeciesDataToDomainMapper {
         order
     )
 
-    override fun map(exception: Exception): SpeciesDomain {
-        TODO("Not yet implemented")
-    }
+    override fun map(exception: Exception) = SpeciesDomain.Fail(
+        when (exception) {
+            is UnknownHostException -> ErrorType.NO_CONNECTION
+            is HttpException -> ErrorType.SERVICE_UNAVAILABLE
+            else -> ErrorType.GENERIC_ERROR
+        }
+    )
 }

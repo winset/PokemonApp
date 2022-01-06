@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.space.myapplication.domain.pokemons.PokemonsDomainToUiMapper
 import com.space.myapplication.domain.pokemons.PokemonsInteractor
+import com.space.myapplication.presentation.pokemons.PokemonCommunication
+import com.space.myapplication.presentation.pokemons.PokemonUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

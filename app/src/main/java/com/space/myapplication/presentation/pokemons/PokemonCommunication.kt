@@ -1,4 +1,4 @@
-package com.space.myapplication.presentation
+package com.space.myapplication.presentation.pokemons
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData

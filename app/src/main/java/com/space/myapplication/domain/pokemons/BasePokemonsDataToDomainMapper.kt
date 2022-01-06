@@ -3,6 +3,7 @@ package com.space.myapplication.domain.pokemons
 import com.space.myapplication.data.pokemons.PokemonData
 import com.space.myapplication.data.pokemons.PokemonDataToDomainMapper
 import com.space.myapplication.data.pokemons.PokemonsDataToDomainMapper
+import com.space.myapplication.domain.ErrorType
 import retrofit2.HttpException
 import java.lang.Exception
 import java.net.UnknownHostException

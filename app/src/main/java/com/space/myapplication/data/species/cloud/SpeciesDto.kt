@@ -13,7 +13,7 @@ data class SpeciesDto(
     val baseHappiness: Int,
     val captureRate: Int,
     val colorDto: ColorDto,
-    val evolvesfFromDto: EvolvesFromSpeciesDto,
+    val evolvesFromDto: EvolvesFromSpeciesDto,
     val formsSwitchable: Boolean,
     val genderRate: Int,
     val hasGenderDifferences: Boolean,
@@ -29,13 +29,12 @@ data class SpeciesDto(
         baseHappiness,
         captureRate,
         colorDto.name,
-        evolvesfFromDto.name,
-        evolvesfFromDto.url,
+        evolvesFromDto.name,
+        evolvesFromDto.url,
         formsSwitchable,
         genderRate,
         hasGenderDifferences,
         hatchCounter,
         order
     )
-
 }

@@ -14,6 +14,9 @@ import com.space.myapplication.domain.pokemons.BasePokemonDataToDomainMapper
 import com.space.myapplication.domain.pokemons.BasePokemonsDataToDomainMapper
 import com.space.myapplication.domain.pokemons.PokemonsInteractor
 import com.space.myapplication.presentation.*
+import com.space.myapplication.presentation.pokemons.BasePokemonDomainToUiMapper
+import com.space.myapplication.presentation.pokemons.BasePokemonsDomainToUiMapper
+import com.space.myapplication.presentation.pokemons.PokemonCommunication
 import io.realm.Realm
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

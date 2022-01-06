@@ -3,7 +3,6 @@ package com.space.myapplication.domain
 import com.space.myapplication.data.pokemons.PokemonData
 import com.space.myapplication.data.pokemons.PokemonDataToDomainMapper
 import com.space.myapplication.domain.pokemons.BasePokemonsDataToDomainMapper
-import com.space.myapplication.domain.pokemons.ErrorType
 import com.space.myapplication.domain.pokemons.PokemonDomain
 import com.space.myapplication.domain.pokemons.PokemonsDomain
 import org.junit.Assert.assertEquals

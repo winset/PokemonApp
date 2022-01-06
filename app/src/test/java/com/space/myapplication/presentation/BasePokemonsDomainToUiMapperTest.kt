@@ -1,8 +1,11 @@
 package com.space.myapplication.presentation
 
 import com.space.myapplication.R
-import com.space.myapplication.domain.pokemons.ErrorType
+import com.space.myapplication.domain.ErrorType
 import com.space.myapplication.domain.pokemons.PokemonDomainToUiMapper
+import com.space.myapplication.presentation.pokemons.BasePokemonsDomainToUiMapper
+import com.space.myapplication.presentation.pokemons.PokemonUi
+import com.space.myapplication.presentation.pokemons.PokemonsUi
 import org.junit.Assert.*
 import org.junit.Test
 import java.lang.IllegalStateException
