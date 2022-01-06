@@ -1,4 +1,4 @@
-package com.space.myapplication.domain.pokemons
+package com.space.myapplication.domain
 
 enum class ErrorType {
     NO_CONNECTION,

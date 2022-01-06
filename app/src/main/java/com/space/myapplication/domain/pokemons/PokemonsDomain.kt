@@ -1,7 +1,8 @@
 package com.space.myapplication.domain.pokemons
 
 import com.space.myapplication.core.Abstract
-import com.space.myapplication.presentation.PokemonsUi
+import com.space.myapplication.domain.ErrorType
+import com.space.myapplication.presentation.pokemons.PokemonsUi
 
 sealed class PokemonsDomain : Abstract.Object<PokemonsUi, PokemonsDomainToUiMapper> {
 

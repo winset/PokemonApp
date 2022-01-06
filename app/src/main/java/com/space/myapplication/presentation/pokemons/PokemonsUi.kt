@@ -1,4 +1,4 @@
-package com.space.myapplication.presentation
+package com.space.myapplication.presentation.pokemons
 
 import com.space.myapplication.core.Abstract
 
