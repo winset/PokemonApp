@@ -12,7 +12,6 @@ import org.junit.Test
 import java.net.UnknownHostException
 /**
  * Test for [PokemonRepository]
- *
  * **/
 class PokemonRepositoryTest : BasePokemonRepositoryTest() {
 

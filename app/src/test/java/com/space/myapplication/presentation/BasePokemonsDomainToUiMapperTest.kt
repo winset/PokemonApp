@@ -1,7 +1,8 @@
 package com.space.myapplication.presentation
 
 import com.space.myapplication.R
-import com.space.myapplication.domain.ErrorType
+import com.space.myapplication.core.ErrorType
+import com.space.myapplication.core.ResourceProvider
 import com.space.myapplication.domain.pokemons.PokemonDomainToUiMapper
 import com.space.myapplication.presentation.pokemons.BasePokemonsDomainToUiMapper
 import com.space.myapplication.presentation.pokemons.PokemonUi

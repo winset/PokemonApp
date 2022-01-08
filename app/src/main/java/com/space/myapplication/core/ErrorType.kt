@@ -1,4 +1,4 @@
-package com.space.myapplication.domain
+package com.space.myapplication.core
 
 enum class ErrorType {
     NO_CONNECTION,

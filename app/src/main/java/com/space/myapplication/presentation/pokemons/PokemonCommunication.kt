@@ -3,23 +3,19 @@ package com.space.myapplication.presentation.pokemons
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.space.myapplication.core.Abstract
+import com.space.myapplication.core.Communication
 
-interface PokemonCommunication : Abstract.Mapper {
-    fun map(pokemon: List<PokemonUi>)
-
-    fun observe(owner: LifecycleOwner, observer: Observer<List<PokemonUi>>)
-
+interface PokemonCommunication : Communication<List<PokemonUi>> {
     class Base : PokemonCommunication {
         private val listLiveData = MutableLiveData<List<PokemonUi>>()
         private val listPokemon = mutableListOf<PokemonUi>()
 
-        override fun map(pokemon: List<PokemonUi>) {
-            if (pokemon.firstOrNull() is PokemonUi.Base) {
-                listPokemon.addAll(pokemon)
+        override fun map(data: List<PokemonUi>) {
+            if (data.firstOrNull() is PokemonUi.Base) {
+                listPokemon.addAll(data)
                 listLiveData.value = listPokemon
             } else {
-                listLiveData.value = pokemon
+                listLiveData.value = data
             }
         }
 
