@@ -1,4 +1,4 @@
-package com.space.myapplication.presentation
+package com.space.myapplication.presentation.pokemons
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,19 +6,22 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.space.myapplication.R
 import com.space.myapplication.core.DiffUtilCallback
-import com.space.myapplication.presentation.pokemons.PokemonUi
 
-class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAdapter.UpcomingViewHolder>() {
+class PokemonAdapter(
+    private val retry: Retry,
+    private val onPokemonClick: (String) -> Unit
+) : RecyclerView.Adapter<PokemonAdapter.UpcomingViewHolder>() {
     private val pokemonList = mutableListOf<PokemonUi>()
 
     fun update(new: List<PokemonUi>) {
-        val diffUtilCallback = DiffUtilCallback(new,pokemonList)
+        val diffUtilCallback = DiffUtilCallback(new, pokemonList)
         val result = DiffUtil.calculateDiff(diffUtilCallback)
         pokemonList.clear()
         pokemonList.addAll(new)
@@ -32,7 +35,7 @@ class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAda
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
-        0 -> UpcomingViewHolder.Base(R.layout.pokemon_item.makeView(parent))
+        0 -> UpcomingViewHolder.Base(R.layout.pokemon_item.makeView(parent), onPokemonClick)
         1 -> UpcomingViewHolder.Fail(R.layout.fail_fullscreen.makeView(parent), retry)
         else -> UpcomingViewHolder.FullscreenProgress(R.layout.progress_fullscreen.makeView(parent))
     }
@@ -46,15 +49,19 @@ class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAda
     abstract class UpcomingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         open fun bind(pokemon: PokemonUi) {}
 
-        class FullscreenProgress(view: View) : UpcomingViewHolder(view) 
+        class FullscreenProgress(view: View) : UpcomingViewHolder(view)
 
-        class Base(view: View) : UpcomingViewHolder(view) {
+        class Base(
+            view: View,
+            private val onPokemonClick: (String) -> Unit
+        ) : UpcomingViewHolder(view) {
+            private val layout = itemView.findViewById<CardView>(R.id.card_pokemon)
             private val name = itemView.findViewById<TextView>(R.id.textView)
             private val image = itemView.findViewById<ImageView>(R.id.image)
             override fun bind(pokemon: PokemonUi) {
                 pokemon.map(object : PokemonUi.StringMapper {
-                    override fun map(text: String, url: String) {
-                        name.text = text
+                    override fun map(name: String, url: String) {
+                        this@Base.name.text = name
                         Glide.with(itemView)
                             .load(url)
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -62,6 +69,13 @@ class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAda
                             .into(image)
                     }
                 })
+                layout.setOnClickListener {
+                    pokemon.map(object : PokemonUi.StringMapper {
+                        override fun map(name: String, url: String) {
+                            onPokemonClick(name)
+                        }
+                    })
+                }
             }
         }
 
@@ -70,8 +84,8 @@ class PokemonAdapter(private val retry: Retry) : RecyclerView.Adapter<PokemonAda
             private val tryAgainBtn = itemView.findViewById<Button>(R.id.try_again_btn)
             override fun bind(pokemon: PokemonUi) {
                 pokemon.map(object : PokemonUi.StringMapper {
-                    override fun map(text: String) {
-                        message.text = text
+                    override fun map(errorMessage: String) {
+                        message.text = errorMessage
                     }
                 })
                 tryAgainBtn.setOnClickListener {

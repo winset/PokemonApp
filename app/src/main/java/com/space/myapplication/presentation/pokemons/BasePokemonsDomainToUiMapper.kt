@@ -1,11 +1,11 @@
 package com.space.myapplication.presentation.pokemons
 
 import com.space.myapplication.R
-import com.space.myapplication.domain.ErrorType
+import com.space.myapplication.core.ErrorType
 import com.space.myapplication.domain.pokemons.PokemonDomain
 import com.space.myapplication.domain.pokemons.PokemonDomainToUiMapper
 import com.space.myapplication.domain.pokemons.PokemonsDomainToUiMapper
-import com.space.myapplication.presentation.ResourceProvider
+import com.space.myapplication.core.ResourceProvider
 
 class BasePokemonsDomainToUiMapper(
     private val resourceProvider: ResourceProvider,

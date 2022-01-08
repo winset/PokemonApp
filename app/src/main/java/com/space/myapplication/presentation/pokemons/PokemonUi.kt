@@ -23,7 +23,7 @@ sealed class PokemonUi : Abstract.Object<Unit, PokemonUi.StringMapper>, Comparin
     }
 
     interface StringMapper : Abstract.Mapper {
-        fun map(text: String, url: String) {}
-        fun map(text: String) {}
+        fun map(name: String, url: String) {}
+        fun map(errorMessage: String) {}
     }
 }

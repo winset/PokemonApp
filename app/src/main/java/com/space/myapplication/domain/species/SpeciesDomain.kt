@@ -1,7 +1,7 @@
 package com.space.myapplication.domain.species
 
 import com.space.myapplication.core.Abstract
-import com.space.myapplication.domain.ErrorType
+import com.space.myapplication.core.ErrorType
 import com.space.myapplication.presentation.species.SpeciesUi
 
 sealed class SpeciesDomain : Abstract.Object<SpeciesUi, SpeciesDomainToUiMapper> {
