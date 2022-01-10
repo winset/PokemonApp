@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/pokemonsFragment">
+
+    <fragment
+        android:id="@+id/pokemonsFragment"
+        android:name="com.space.myapplication.presentation.pokemons.PokemonsFragment"
+        android:label="PokemonsFragment" >
+        <action
+            android:id="@+id/action_pokemonsFragment_to_speciesFragment"
+            app:destination="@id/speciesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/speciesFragment"
+        android:name="com.space.myapplication.presentation.species.SpeciesFragment"
+        android:label="SpeciesFragment" />
+</navigation>
