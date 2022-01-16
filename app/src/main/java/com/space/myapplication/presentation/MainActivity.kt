@@ -2,8 +2,6 @@ package com.space.myapplication.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.space.myapplication.R
 import com.space.myapplication.core.PokemonApp
@@ -21,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = (application as PokemonApp).mainViewModel
-        viewModel.observe(this, {
+       /* viewModel.observe(this, {
             val fragmentId = when (it) {
                 Screen.POKEMONS_SCREEN -> R.id.pokemonsFragment
                 Screen.SPECIES_SCREEN -> R.id.speciesFragment
@@ -34,10 +32,10 @@ class MainActivity : AppCompatActivity() {
             graph.startDestination = fragmentId
             navController.setGraph(graph, intent.extras)
 
-        })
+        })*/
     }
 
     override fun onBackPressed() {
-        if (viewModel.navigateBack()) super.onBackPressed()
+        /*if (viewModel.navigateBack())*/ super.onBackPressed()
     }
 }

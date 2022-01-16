@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,7 +18,7 @@ import com.space.myapplication.core.DiffUtilCallback
 
 class PokemonAdapter(
     private val retry: Retry,
-    private val onPokemonClick: (String) -> Unit
+    private val onPokemonClick: (String, String, FragmentNavigator.Extras) -> Unit
 ) : RecyclerView.Adapter<PokemonAdapter.UpcomingViewHolder>() {
     private val pokemonList = mutableListOf<PokemonUi>()
 
@@ -53,15 +55,17 @@ class PokemonAdapter(
 
         class Base(
             view: View,
-            private val onPokemonClick: (String) -> Unit
+            private val onPokemonClick: (String, String, FragmentNavigator.Extras) -> Unit
         ) : UpcomingViewHolder(view) {
             private val layout = itemView.findViewById<CardView>(R.id.card_pokemon)
             private val name = itemView.findViewById<TextView>(R.id.textView)
             private val image = itemView.findViewById<ImageView>(R.id.image)
             override fun bind(pokemon: PokemonUi) {
+
                 pokemon.map(object : PokemonUi.StringMapper {
                     override fun map(name: String, url: String) {
                         this@Base.name.text = name
+                        image.transitionName = name
                         Glide.with(itemView)
                             .load(url)
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -72,7 +76,10 @@ class PokemonAdapter(
                 layout.setOnClickListener {
                     pokemon.map(object : PokemonUi.StringMapper {
                         override fun map(name: String, url: String) {
-                            onPokemonClick(name)
+                            val extras = FragmentNavigatorExtras(
+                                image to name
+                            )
+                            onPokemonClick(name, url, extras)
                         }
                     })
                 }

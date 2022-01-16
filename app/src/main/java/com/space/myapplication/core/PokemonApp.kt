@@ -21,13 +21,11 @@ import com.space.myapplication.domain.pokemons.BasePokemonsDataToDomainMapper
 import com.space.myapplication.domain.pokemons.PokemonsInteractor
 import com.space.myapplication.domain.species.BaseSpeciesDataToDomainMapper
 import com.space.myapplication.domain.species.SpeciesInteractor
-import com.space.myapplication.presentation.MainCommunication
+import com.space.myapplication.presentation.NavigationCommunication
 import com.space.myapplication.presentation.MainViewModel
 import com.space.myapplication.presentation.Navigator
-import com.space.myapplication.presentation.pokemons.BasePokemonDomainToUiMapper
-import com.space.myapplication.presentation.pokemons.BasePokemonsDomainToUiMapper
-import com.space.myapplication.presentation.pokemons.PokemonsViewModel
-import com.space.myapplication.presentation.pokemons.PokemonCommunication
+import com.space.myapplication.presentation.pokemons.*
+import com.space.myapplication.presentation.species.BaseSpeciesDomainToUiMapper
 import com.space.myapplication.presentation.species.SpeciesCommunication
 import com.space.myapplication.presentation.species.SpeciesViewModel
 import io.realm.Realm
@@ -86,32 +84,35 @@ class PokemonApp : Application() {
             SpeciesCloudDataSource.Base(retrofit.create(SpeciesService::class.java))
 
         val speciesRepository =
-            SpeciesRepository.Base(speciesCloudDataSource, speciesCacheDataSource,ToSpeciesMapper.Base())
+            SpeciesRepository.Base(
+                speciesCloudDataSource,
+                speciesCacheDataSource,
+                ToSpeciesMapper.Base()
+            )
         val speciesInteractor =
             SpeciesInteractor.Base(speciesRepository, BaseSpeciesDataToDomainMapper())
 
         val communication = PokemonCommunication.Base()
         val navigator = Navigator.Base(this)
-        val navigationCommunication = MainCommunication.Base()
+        val navigationCommunication = NavigationCommunication.Base()
+        val resourceProvider = ResourceProvider.Base(this)
         pokemonsViewModel = PokemonsViewModel(
             pokemonsInteractor,
             BasePokemonsDomainToUiMapper(
-                ResourceProvider.Base(this),
+                resourceProvider,
                 BasePokemonDomainToUiMapper()
             ),
             communication,
-            navigator,
-            navigationCommunication
+            navigator
         )
 
         speciesViewModel = SpeciesViewModel(
+            speciesInteractor,
+            BaseSpeciesDomainToUiMapper(resourceProvider),
             SpeciesCommunication.Base(),
             navigator
         )
 
-        mainViewModel = MainViewModel(
-            navigator,
-            navigationCommunication
-        )
+        mainViewModel = MainViewModel(navigator, navigationCommunication)
     }
 }

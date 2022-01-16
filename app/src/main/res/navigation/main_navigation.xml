@@ -7,13 +7,27 @@
     <fragment
         android:id="@+id/pokemonsFragment"
         android:name="com.space.myapplication.presentation.pokemons.PokemonsFragment"
-        android:label="PokemonsFragment" >
+        android:label="PokemonsFragment">
         <action
             android:id="@+id/action_pokemonsFragment_to_speciesFragment"
-            app:destination="@id/speciesFragment" />
+            app:destination="@id/speciesFragment">
+            <argument
+                android:name="name"
+                app:argType="string" />
+            <argument
+                android:name="url"
+                app:argType="string" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/speciesFragment"
         android:name="com.space.myapplication.presentation.species.SpeciesFragment"
-        android:label="SpeciesFragment" />
+        android:label="SpeciesFragment">
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 </navigation>
