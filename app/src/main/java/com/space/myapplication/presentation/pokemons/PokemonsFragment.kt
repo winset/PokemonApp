@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.space.myapplication.core.PokemonApp
 import com.space.myapplication.core.RecyclerPaging
@@ -34,14 +37,14 @@ class PokemonsFragment : Fragment() {
                 viewModel.getPokemons()
             }
         }
-        val upcomingAdapter = PokemonAdapter(retry, ::onPokemonClick)
+        val pokemonAdapter = PokemonAdapter(retry, ::onPokemonClick)
 
         RecyclerPaging(binding.upcomingRv, ::loadMore)
-        binding.upcomingRv.adapter = upcomingAdapter
+        binding.upcomingRv.adapter = pokemonAdapter
         binding.upcomingRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        viewModel.observe(this, {
-            upcomingAdapter.update(it)
+        viewModel.observe(viewLifecycleOwner, {
+            pokemonAdapter.update(it)
         })
         viewModel.getPokemons()
     }
@@ -50,7 +53,8 @@ class PokemonsFragment : Fragment() {
         viewModel.getPokemons()
     }
 
-    private fun onPokemonClick(name: String) {
-        viewModel.onPokemonClick(name)
+    private fun onPokemonClick(name: String, url: String, extras: FragmentNavigator.Extras) {
+        val directions = PokemonsFragmentDirections.actionPokemonsFragmentToSpeciesFragment(name, url)
+        findNavController().navigate(directions,extras)
     }
 }

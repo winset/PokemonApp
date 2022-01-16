@@ -41,7 +41,6 @@ interface Navigator : Save<Int>, Read<Int> {
 
         override fun read(): Int = sharedPreferences.getInt(CURRENT_SCREEN_KEY, 0)
 
-
         override fun save(data: Int) {
             sharedPreferences.edit().putInt(CURRENT_SCREEN_KEY, data).apply()
         }
