@@ -20,7 +20,7 @@ sealed class SpeciesDomain : Abstract.Object<SpeciesUi, SpeciesDomainToUiMapper>
         private val genderRate: Int,
         private val hasGenderDifferences: Boolean,
         private val hatchCounter: Int,
-        private val order: Int,
+        private val order: Int
     ) : SpeciesDomain() {
         override fun map(mapper: SpeciesDomainToUiMapper) = mapper.map(
             id,

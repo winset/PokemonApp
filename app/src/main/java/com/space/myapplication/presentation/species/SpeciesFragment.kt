@@ -29,7 +29,7 @@ class SpeciesFragment : Fragment() {
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         viewModel = (requireActivity().application as PokemonApp).speciesViewModel
         viewModel.init()
-
+        viewModel.getInfo(args.name)
         return binding.root
     }
 
