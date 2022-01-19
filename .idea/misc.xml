@@ -4,14 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.27076923076923076" />
+        <entry key="app/src/main/res/drawable/ic_pokeball.xml" value="0.262" />
         <entry key="app/src/main/res/drawable/ic_pokemon_placeholder.xml" value="0.228125" />
         <entry key="app/src/main/res/drawable/ic_wolf_head_silhouette_png_24.xml" value="0.228125" />
         <entry key="app/src/main/res/drawable/pokemon_placeholder.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/drawable/yellow_gradien_backgraound.xml" value="0.141" />
+        <entry key="app/src/main/res/drawable/yellow_gradien_center.xml" value="0.124" />
+        <entry key="app/src/main/res/drawable/yellow_gradien_end.xml" value="0.124" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/fail_fullscreen.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.3391507565630201" />
-        <entry key="app/src/main/res/layout/fragment_species.xml" value="0.23958333333333334" />
-        <entry key="app/src/main/res/layout/pokemon_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_species.xml" value="0.3718780517578125" />
+        <entry key="app/src/main/res/layout/pokemon_item.xml" value="0.36041412353515623" />
         <entry key="app/src/main/res/layout/progress_fullscreen.xml" value="0.18072916666666666" />
       </map>
     </option>
