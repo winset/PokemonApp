@@ -8,7 +8,6 @@ import com.space.myapplication.domain.pokemons.PokemonDomain
 import com.space.myapplication.domain.pokemons.PokemonsDomain
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.lang.IllegalStateException
 import java.net.UnknownHostException
 
 /**

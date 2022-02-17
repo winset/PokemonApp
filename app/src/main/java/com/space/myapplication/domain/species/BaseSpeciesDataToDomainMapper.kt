@@ -1,9 +1,8 @@
 package com.space.myapplication.domain.species
 
-import com.space.myapplication.data.species.SpeciesDataToDomainMapper
 import com.space.myapplication.core.ErrorType
+import com.space.myapplication.data.species.SpeciesDataToDomainMapper
 import retrofit2.HttpException
-import java.lang.Exception
 import java.net.UnknownHostException
 
 class BaseSpeciesDataToDomainMapper : SpeciesDataToDomainMapper {

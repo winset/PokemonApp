@@ -1,9 +1,7 @@
 package com.space.myapplication.data.species
 
 import com.space.myapplication.core.Abstract
-import com.space.myapplication.domain.pokemons.PokemonsDomain
 import com.space.myapplication.domain.species.SpeciesDomain
-import java.lang.Exception
 
 interface SpeciesDataToDomainMapper : Abstract.Mapper {
     fun map(

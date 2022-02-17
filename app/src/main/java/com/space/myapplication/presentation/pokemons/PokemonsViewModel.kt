@@ -6,25 +6,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.space.myapplication.domain.pokemons.PokemonsDomainToUiMapper
 import com.space.myapplication.domain.pokemons.PokemonsInteractor
-import com.space.myapplication.presentation.Navigator
-import com.space.myapplication.presentation.Screen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class PokemonsViewModel(
+class PokemonsViewModel @Inject constructor(
     private val interactor: PokemonsInteractor,
     private val uiMapper: PokemonsDomainToUiMapper,
-    private val communication: PokemonCommunication,
-    private val navigator: Navigator
+    private val communication: PokemonCommunication
 ) : ViewModel() {
 
     private var isLoading = false
     private var page = 0
-
-    fun init() {
-        navigator.save(Screen.POKEMONS_SCREEN)
-    }
 
     fun getPokemons() {
         if (!isLoading) {

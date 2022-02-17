@@ -43,7 +43,7 @@ dependencies {
     def okhttp = "4.9.0"
     def coroutines = "1.5.2"
     def nav_version = "2.3.5"
-    def dagger="2.40.2"
+    def dagger = "2.40.2"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'

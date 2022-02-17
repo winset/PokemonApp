@@ -2,7 +2,6 @@ package com.space.myapplication.data.pokemons.cache
 
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.DbWrapper
-import io.realm.Realm
 
 interface PokemonDataToDbMapper : Abstract.Mapper {
     fun mapToDB(name: String, url: String, page: Int, dbWrapper: DbWrapper<PokemonEntity>): PokemonEntity

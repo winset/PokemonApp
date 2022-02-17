@@ -3,7 +3,6 @@ package com.space.myapplication.core
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.space.myapplication.presentation.pokemons.PokemonUi
 
 interface Communication<T> : Abstract.Mapper.Data<T, Unit> {
     fun observe(owner: LifecycleOwner, observer: Observer<T>)

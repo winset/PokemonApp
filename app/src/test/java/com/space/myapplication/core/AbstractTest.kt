@@ -1,6 +1,6 @@
 package com.space.myapplication.core
 
-import org.junit.Assert.*
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.IOException
 

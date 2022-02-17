@@ -1,7 +1,7 @@
 package com.space.myapplication.domain.pokemons
 
-import com.space.myapplication.data.pokemons.PokemonsDataToDomainMapper
 import com.space.myapplication.data.pokemons.PokemonRepository
+import com.space.myapplication.data.pokemons.PokemonsDataToDomainMapper
 
 interface PokemonsInteractor {
     suspend fun getPokemons(page:Int): PokemonsDomain
