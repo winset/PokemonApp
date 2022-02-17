@@ -2,7 +2,6 @@ package com.space.myapplication.data.pokemons
 
 import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
 import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
-import java.lang.Exception
 
 interface PokemonRepository {
     suspend fun getPokemon(page:Int): PokemonsData

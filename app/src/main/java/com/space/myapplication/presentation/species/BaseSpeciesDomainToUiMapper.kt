@@ -2,8 +2,8 @@ package com.space.myapplication.presentation.species
 
 import com.space.myapplication.R
 import com.space.myapplication.core.ErrorType
-import com.space.myapplication.domain.species.SpeciesDomainToUiMapper
 import com.space.myapplication.core.ResourceProvider
+import com.space.myapplication.domain.species.SpeciesDomainToUiMapper
 
 class BaseSpeciesDomainToUiMapper(
     private val resourceProvider: ResourceProvider
@@ -24,7 +24,23 @@ class BaseSpeciesDomainToUiMapper(
         hasGenderDifferences: Boolean,
         hatchCounter: Int,
         order: Int
-    ) = SpeciesUi.Base(id,name)
+    ) = SpeciesUi.Base(
+        id,
+        isBaby,
+        isLegendary,
+        isMythical,
+        name,
+        baseHappiness,
+        captureRate,
+        color,
+        evolvesFromName,
+        evolvesFromUrl,
+        formsSwitchable,
+        genderRate,
+        hasGenderDifferences,
+        hatchCounter,
+        order
+    )
 
     override fun map(errorType: ErrorType): SpeciesUi {
         val msgId = when (errorType) {

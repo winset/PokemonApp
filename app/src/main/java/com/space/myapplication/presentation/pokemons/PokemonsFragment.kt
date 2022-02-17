@@ -1,23 +1,41 @@
 package com.space.myapplication.presentation.pokemons
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.space.myapplication.core.PokemonApp
 import com.space.myapplication.core.RecyclerPaging
 import com.space.myapplication.databinding.FragmentMainBinding
+import com.space.myapplication.di.app.AppDepsProvider
+import com.space.myapplication.di.app.ViewModelFactory
+import com.space.myapplication.di.pokemon.DaggerPokemonComponent
+import javax.inject.Inject
 
 class PokemonsFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: PokemonsViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this,
+            viewModelFactory
+        )[PokemonsViewModel::class.java]
+    }
+
+    override fun onAttach(context: Context) {
+         DaggerPokemonComponent.builder().deps(AppDepsProvider.deps)
+            .build().inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,8 +43,6 @@ class PokemonsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater)
-        viewModel = (requireActivity().application as PokemonApp).pokemonsViewModel
-        viewModel.init()
         return binding.root
     }
 
@@ -43,9 +59,9 @@ class PokemonsFragment : Fragment() {
         binding.upcomingRv.adapter = pokemonAdapter
         binding.upcomingRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        viewModel.observe(viewLifecycleOwner, {
+        viewModel.observe(viewLifecycleOwner) {
             pokemonAdapter.update(it)
-        })
+        }
         viewModel.getPokemons()
     }
 
@@ -54,7 +70,8 @@ class PokemonsFragment : Fragment() {
     }
 
     private fun onPokemonClick(name: String, url: String, extras: FragmentNavigator.Extras) {
-        val directions = PokemonsFragmentDirections.actionPokemonsFragmentToSpeciesFragment(name, url)
-        findNavController().navigate(directions,extras)
+        val directions =
+            PokemonsFragmentDirections.actionPokemonsFragmentToSpeciesFragment(name, url)
+        findNavController().navigate(directions, extras)
     }
 }

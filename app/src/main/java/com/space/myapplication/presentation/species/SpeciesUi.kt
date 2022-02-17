@@ -1,7 +1,6 @@
 package com.space.myapplication.presentation.species
 
 import com.space.myapplication.core.Abstract
-import com.space.myapplication.presentation.pokemons.PokemonUi
 
 sealed class SpeciesUi : Abstract.Object<Unit, SpeciesUi.StringMapper> {
     override fun map(mapper: StringMapper) = Unit
