@@ -9,8 +9,8 @@ import com.space.myapplication.domain.pokemons.PokemonsDomainToUiMapper
 
 class BasePokemonsDomainToUiMapper(
     private val resourceProvider: ResourceProvider,
-    private val pokemonMapper: PokemonDomainToUiMapper
-) : PokemonsDomainToUiMapper {
+    private val pokemonMapper: PokemonDomainToUiMapper<PokemonUi>
+) : PokemonsDomainToUiMapper<PokemonsUi> {
     override fun map(pokemons: List<PokemonDomain>) =
         PokemonsUi.Base(pokemons.map { it.map(pokemonMapper) })
 

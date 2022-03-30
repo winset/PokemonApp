@@ -6,7 +6,9 @@ import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
 import com.space.myapplication.data.pokemons.cache.PokemonDataToDbMapper
 import com.space.myapplication.data.pokemons.cache.PokemonEntity
 import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
+import com.space.myapplication.data.pokemons.cloud.PokemonCloudDataSource
 import com.space.myapplication.data.pokemons.cloud.PokemonDto
+import com.space.myapplication.data.pokemons.cloud.PokemonsCloudMapper
 import io.realm.Realm
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
