@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigator
@@ -17,6 +19,7 @@ import com.space.myapplication.di.app.ViewModelFactory
 import com.space.myapplication.di.pokemon.DaggerPokemonComponent
 import javax.inject.Inject
 
+
 class PokemonsFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
@@ -25,10 +28,7 @@ class PokemonsFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
-        ViewModelProvider(
-            this,
-            viewModelFactory
-        )[PokemonsViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[PokemonsViewModel::class.java]
     }
 
     override fun onAttach(context: Context) {
@@ -48,6 +48,7 @@ class PokemonsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
         val retry = object : PokemonAdapter.Retry {
             override fun tryAgain() {
                 viewModel.getPokemons()
@@ -55,13 +56,18 @@ class PokemonsFragment : Fragment() {
         }
         val pokemonAdapter = PokemonAdapter(retry, ::onPokemonClick)
 
-        RecyclerPaging(binding.upcomingRv, ::loadMore)
-        binding.upcomingRv.adapter = pokemonAdapter
-        binding.upcomingRv.layoutManager =
+        RecyclerPaging(binding.pokemonRv, ::loadMore)
+        binding.pokemonRv.adapter = pokemonAdapter
+        binding.pokemonRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         viewModel.observe(viewLifecycleOwner) {
             pokemonAdapter.update(it)
+            (view.parent as? ViewGroup)?.doOnPreDraw {
+                // Parent has been drawn. Start transitioning!
+                startPostponedEnterTransition()
+            }
         }
+
         viewModel.getPokemons()
     }
 
