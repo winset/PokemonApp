@@ -9,6 +9,7 @@ import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
 import com.space.myapplication.data.pokemons.cloud.PokemonCloudDataSource
 import com.space.myapplication.data.pokemons.cloud.PokemonDto
 import com.space.myapplication.data.pokemons.cloud.PokemonsCloudMapper
+import com.space.myapplication.domain.pokemons.PokemonDomain
 import io.realm.Realm
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -26,25 +27,26 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
     fun test_save_upcomings() = runBlocking {
         val testCloudDataSource = TestCloudDataSource(returnSuccess = true)
         val testCacheDataSource = TestCacheDataSource()
-        val repository = PokemonRepository.Base(
+        val repository = BasePokemonRepository(
             testCloudDataSource,
             testCacheDataSource,
             PokemonsCloudMapper.Base(TestToPokemonMapper()),
-            PokemonsCacheMapper.Base(TestPokemonCacheMapper())
+            PokemonsCacheMapper.Base(TestPokemonCacheMapper()),
+            mapper
         )
         val page = 0
         val actualCloud = repository.getPokemon(page)
         val expectedCloud = PokemonsData.Success(
             listOf(
-                PokemonData(
+                PokemonData.Base(
                     "Dragon 1",
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"
                 ),
-                PokemonData(
+                PokemonData.Base(
                     "Dragon 2",
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"
                 ),
-                PokemonData(
+                PokemonData.Base(
                     "Dragon 3",
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png"
                 )
@@ -55,15 +57,15 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
         val actualCache = repository.getPokemon(page)
         val expectedCache = PokemonsData.Success(
             listOf(
-                PokemonData(
+                PokemonData.Base(
                     "Dragon 1 db",
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"
                 ),
-                PokemonData(
+                PokemonData.Base(
                     "Dragon 2 db",
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"
                 ),
-                PokemonData(
+                PokemonData.Base(
                     "Dragon 3 db",
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png"
                 )
@@ -88,6 +90,10 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
         }
     }
 
+    private val mapper = BasePokemonsDataToDomainMapper(object : PokemonDataToDomainMapper<PokemonDomain> {
+        override fun map(name: String, url: String) = PokemonDomain(name, url)
+    })
+
     private inner class TestCacheDataSource() : PokemonCacheDataSource {
 
         private val list = mutableListOf<PokemonEntity>()
@@ -106,7 +112,7 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
                             page
                         ).name*/
                     } db" //TODO fix it
-                    url = pokemon.mapTo(mapper, PokemonDbWrapper(Realm.getDefaultInstance()), page).url
+                    url = pokemon.map(mapper, PokemonDbWrapper(Realm.getDefaultInstance()), page).url
                 })
             }
         }

@@ -20,7 +20,7 @@ class BasePokemonsDomainToUiMapperTest {
     fun test_fail() {
         val resourceProvider = TestResourceProvider()
         val mapper =
-            BasePokemonsDomainToUiMapper(resourceProvider, object : PokemonDomainToUiMapper {
+            BasePokemonsDomainToUiMapper(resourceProvider, object : PokemonDomainToUiMapper<PokemonUi> {
                 override fun map(name: String, url: String): PokemonUi {
                     throw IllegalStateException()//not used here
                 }
