@@ -7,7 +7,7 @@ import com.space.myapplication.domain.species.SpeciesDomainToUiMapper
 
 class BaseSpeciesDomainToUiMapper(
     private val resourceProvider: ResourceProvider
-) : SpeciesDomainToUiMapper {
+) : SpeciesDomainToUiMapper<SpeciesUi> {
     override fun map(
         id: Int,
         isBaby: Boolean,

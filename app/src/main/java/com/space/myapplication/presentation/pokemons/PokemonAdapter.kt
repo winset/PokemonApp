@@ -76,9 +76,7 @@ class PokemonAdapter(
                 layout.setOnClickListener {
                     pokemon.map(object : PokemonUi.StringMapper {
                         override fun map(name: String, url: String) {
-                            val extras = FragmentNavigatorExtras(
-                                image to name
-                            )
+                            val extras = FragmentNavigatorExtras(image to name)
                             onPokemonClick(name, url, extras)
                         }
                     })

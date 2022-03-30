@@ -11,7 +11,7 @@ interface SpeciesCacheDataSource {
 
     class Base(
         private val realmProvider: RealmProvider,
-        private val speciesDataToDbMapper: SpeciesDataToDbMapper
+        private val speciesDataToDbMapper: SpeciesDataToDbMapper<SpeciesEntity>
     ) : SpeciesCacheDataSource {
 
         override fun getSpecies(name: String): SpeciesEntity? {
@@ -26,7 +26,7 @@ interface SpeciesCacheDataSource {
         override fun saveSpecies(speciesData: SpeciesData.Success) =
             realmProvider.provide().use { realm ->
                 realm.executeTransaction {
-                    speciesData.mapTo(speciesDataToDbMapper, SpeciesDbWrapper(it))
+                    speciesData.map(speciesDataToDbMapper, SpeciesDbWrapper(it))
                 }
             }
 

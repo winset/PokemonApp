@@ -2,8 +2,9 @@ package com.space.myapplication.data.species.cache
 
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.DbWrapper
+import io.realm.RealmObject
 
-interface SpeciesDataToDbMapper : Abstract.Mapper {
+interface SpeciesDataToDbMapper<T : RealmObject> : Abstract.Mapper {
     fun mapToDB(
         id: Int,
         isBaby: Boolean,
@@ -20,10 +21,10 @@ interface SpeciesDataToDbMapper : Abstract.Mapper {
         hasGenderDifferences: Boolean,
         hatchCounter: Int,
         order: Int,
-        dbWrapper: DbWrapper<SpeciesEntity>
-    ): SpeciesEntity
+        dbWrapper: DbWrapper<T>
+    ): T
 
-    class Base : SpeciesDataToDbMapper {
+    class Base : SpeciesDataToDbMapper<SpeciesEntity> {
         override fun mapToDB(
             id: Int,
             isBaby: Boolean,

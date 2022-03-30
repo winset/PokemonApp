@@ -3,10 +3,11 @@ package com.space.myapplication.data.species
 import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.DbWrapper
 import com.space.myapplication.data.species.cache.SpeciesDataToDbMapper
-import com.space.myapplication.data.species.cache.SpeciesEntity
-import com.space.myapplication.domain.species.SpeciesDomain
+import io.realm.RealmObject
 
-sealed class SpeciesData : Abstract.Object<SpeciesDomain, SpeciesDataToDomainMapper> {
+sealed class SpeciesData : Abstract.DataObject {
+
+    abstract fun <T> map(mapper: SpeciesDataToDomainMapper<T>): T
 
     data class Success(
         private val id: Int,
@@ -24,8 +25,8 @@ sealed class SpeciesData : Abstract.Object<SpeciesDomain, SpeciesDataToDomainMap
         private val hasGenderDifferences: Boolean,
         private val hatchCounter: Int,
         private val order: Int,
-    ) : SpeciesData() , ToSpeciesDb<SpeciesEntity, SpeciesDataToDbMapper>{
-        override fun map(mapper: SpeciesDataToDomainMapper) = mapper.map(
+    ) : SpeciesData() , ToSpeciesDb{
+        override fun <T> map(mapper: SpeciesDataToDomainMapper<T>): T = mapper.map(
             id,
             isBaby,
             isLegendary,
@@ -43,10 +44,7 @@ sealed class SpeciesData : Abstract.Object<SpeciesDomain, SpeciesDataToDomainMap
             order
         )
 
-        override fun mapTo(
-            mapper: SpeciesDataToDbMapper,
-            dbWrapper: DbWrapper<SpeciesEntity>
-        ): SpeciesEntity = mapper.mapToDB(
+        override fun <T : RealmObject> map(mapper: SpeciesDataToDbMapper<T>, db: DbWrapper<T>): T = mapper.mapToDB(
             id,
             isBaby,
             isLegendary,
@@ -62,18 +60,17 @@ sealed class SpeciesData : Abstract.Object<SpeciesDomain, SpeciesDataToDomainMap
             hasGenderDifferences,
             hatchCounter,
             order,
-            dbWrapper
+            db
         )
     }
 
     data class Fail(private val exception: Exception) : SpeciesData() {
-        override fun map(mapper: SpeciesDataToDomainMapper): SpeciesDomain {
+        override fun <T> map(mapper: SpeciesDataToDomainMapper<T>): T {
             return mapper.map(exception)
         }
     }
-
 }
 
-interface ToSpeciesDb<T, M : Abstract.Mapper> {
-    fun mapTo(mapper: M, dbWrapper: DbWrapper<T>): T
+interface ToSpeciesDb {
+    fun <T : RealmObject> map(mapper: SpeciesDataToDbMapper<T>, db: DbWrapper<T>): T
 }

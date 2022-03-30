@@ -13,13 +13,13 @@ class BasePokemonRepository<T>(
     private val pokemonsCacheMapper: PokemonsCacheMapper,
     private val mapper: PokemonsDataToDomainMapper<T>
 ) : PokemonRepository<T> {
-    override suspend fun getPokemon(page:Int):T {
+    override suspend fun getPokemon(page: Int): T {
         val dataObject = try {
             val pokemonEntityList = cacheDataSource.getPokemonList(page)
             if (pokemonEntityList.isEmpty()) {
                 val upcomingCloudList = pokemonCloudDataSource.getPokemon(page)
                 val upcomingList = pokemonsCloudMapper.map(upcomingCloudList)
-                cacheDataSource.savePokemonList(upcomingList,page)
+                cacheDataSource.savePokemonList(upcomingList, page)
                 PokemonsData.Success(upcomingList)
             } else {
                 PokemonsData.Success(pokemonsCacheMapper.map(pokemonEntityList))

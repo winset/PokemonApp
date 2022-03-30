@@ -1,10 +1,11 @@
 package com.space.myapplication.domain.species
 
-import com.space.myapplication.core.Abstract
 import com.space.myapplication.core.ErrorType
-import com.space.myapplication.presentation.species.SpeciesUi
 
-sealed class SpeciesDomain : Abstract.Object<SpeciesUi, SpeciesDomainToUiMapper> {
+sealed class SpeciesDomain  {
+
+    abstract fun <T> map(mapper: SpeciesDomainToUiMapper<T>): T
+
     data class Success(
         private val id: Int,
         private val isBaby: Boolean,
@@ -22,7 +23,7 @@ sealed class SpeciesDomain : Abstract.Object<SpeciesUi, SpeciesDomainToUiMapper>
         private val hatchCounter: Int,
         private val order: Int
     ) : SpeciesDomain() {
-        override fun map(mapper: SpeciesDomainToUiMapper) = mapper.map(
+        override fun <T> map(mapper: SpeciesDomainToUiMapper<T>): T = mapper.map(
             id,
             isBaby,
             isLegendary,
@@ -42,6 +43,6 @@ sealed class SpeciesDomain : Abstract.Object<SpeciesUi, SpeciesDomainToUiMapper>
     }
 
     data class Fail(private val errorType: ErrorType) : SpeciesDomain() {
-        override fun map(mapper: SpeciesDomainToUiMapper) = mapper.map(errorType)
+        override fun <T> map(mapper: SpeciesDomainToUiMapper<T>): T = mapper.map(errorType)
     }
 }

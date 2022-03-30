@@ -1,9 +1,10 @@
 package com.space.myapplication.data.species
 
 import com.space.myapplication.core.Abstract
+import com.space.myapplication.data.pokemons.PokemonData
 import com.space.myapplication.domain.species.SpeciesDomain
 
-interface SpeciesDataToDomainMapper : Abstract.Mapper {
+interface SpeciesDataToDomainMapper<T> : Abstract.Mapper {
     fun map(
         id: Int,
         isBaby: Boolean,
@@ -20,6 +21,7 @@ interface SpeciesDataToDomainMapper : Abstract.Mapper {
         hasGenderDifferences: Boolean,
         hatchCounter: Int,
         order: Int,
-    ): SpeciesDomain
-    fun map(exception: Exception): SpeciesDomain
+    ): T
+
+    fun map(exception: Exception): T
 }
