@@ -3,7 +3,7 @@ package com.space.myapplication.domain
 import com.space.myapplication.core.ErrorType
 import com.space.myapplication.data.pokemons.PokemonData
 import com.space.myapplication.data.pokemons.PokemonDataToDomainMapper
-import com.space.myapplication.domain.pokemons.BasePokemonsDataToDomainMapper
+import com.space.myapplication.data.pokemons.BasePokemonsDataToDomainMapper
 import com.space.myapplication.domain.pokemons.PokemonDomain
 import com.space.myapplication.domain.pokemons.PokemonsDomain
 import org.junit.Assert.assertEquals
@@ -16,7 +16,7 @@ import java.net.UnknownHostException
  * **/
 class BasePokemonsDataToDomainMapperTest {
 
-    private val mapper = BasePokemonsDataToDomainMapper(object : PokemonDataToDomainMapper {
+    private val mapper = BasePokemonsDataToDomainMapper(object : PokemonDataToDomainMapper<PokemonDomain> {
         override fun map(name: String, url: String) = PokemonDomain(name, url)
     })
 
@@ -24,9 +24,9 @@ class BasePokemonsDataToDomainMapperTest {
     fun test_success() {
         val actual = mapper.map(
             listOf(
-                PokemonData("1", "url1"),
-                PokemonData("2", "url2"),
-                PokemonData("3", "url3")
+                PokemonData.Base("1", "url1"),
+                PokemonData.Base("2", "url2"),
+                PokemonData.Base("3", "url3")
             )
         )
 

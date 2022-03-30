@@ -3,52 +3,53 @@ package com.space.myapplication.di.pokemon
 import com.space.myapplication.data.pokemons.*
 import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
 import com.space.myapplication.data.pokemons.cache.PokemonDataToDbMapper
+import com.space.myapplication.data.pokemons.cache.PokemonEntity
 import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
+import com.space.myapplication.data.pokemons.cloud.PokemonCloudDataSource
+import com.space.myapplication.data.pokemons.cloud.PokemonsCloudMapper
 import com.space.myapplication.domain.pokemons.*
-import com.space.myapplication.presentation.pokemons.BasePokemonDomainToUiMapper
-import com.space.myapplication.presentation.pokemons.BasePokemonsDomainToUiMapper
-import com.space.myapplication.presentation.pokemons.PokemonCommunication
+import com.space.myapplication.presentation.pokemons.*
 import dagger.Binds
 import dagger.Module
 
 @Module
 interface PokemonBindModule {
     @Binds
-    fun bindPokemonRepository(pokemonRepository: PokemonRepository.Base): PokemonRepository
+    fun bindPokemonRepository(pokemonRepository: BasePokemonRepository<PokemonsDomain>): PokemonRepository<PokemonsDomain>
 
     @Binds
-     fun bindPokemonsInteractor(pokemonsInteractor: PokemonsInteractor.Base): PokemonsInteractor
+    fun bindPokemonsInteractor(pokemonsInteractor: PokemonsInteractor.Base): PokemonsInteractor
 
     @Binds
-     fun bindPokemonsDataToDomainMapper(pokemonsDataToDomainMapper: BasePokemonsDataToDomainMapper): PokemonsDataToDomainMapper
+    fun bindPokemonsDataToDomainMapper(pokemonsDataToDomainMapper: BasePokemonsDataToDomainMapper): PokemonsDataToDomainMapper<PokemonsDomain>
 
     @Binds
-     fun bindPokemonDataToDomainMapper(pokemonDataToDomainMapper: BasePokemonDataToDomainMapper): PokemonDataToDomainMapper
+    fun bindPokemonDataToDomainMapper(pokemonDataToDomainMapper: BasePokemonDataToDomainMapper): PokemonDataToDomainMapper<PokemonDomain>
 
     @Binds
-     fun bindPokemonCloudDataSource(pokemonCloudDataSource: PokemonCloudDataSource.Base): PokemonCloudDataSource
+    fun bindPokemonCloudDataSource(pokemonCloudDataSource: PokemonCloudDataSource.Base): PokemonCloudDataSource
 
     @Binds
-     fun bindPokemonCacheDataSource(pokemonCacheDataSource: PokemonCacheDataSource.Base): PokemonCacheDataSource
+    fun bindPokemonCacheDataSource(pokemonCacheDataSource: PokemonCacheDataSource.Base): PokemonCacheDataSource
 
     @Binds
-     fun bindPokemonDataToDbMapper(pokemonDataToDbMapper: PokemonDataToDbMapper.Base): PokemonDataToDbMapper
+    fun bindPokemonDataToDbMapper(pokemonDataToDbMapper: PokemonDataToDbMapper.Base): PokemonDataToDbMapper<PokemonEntity>
 
     @Binds
-     fun bindPokemonsCloudMapper(pokemonsCloudMapper: PokemonsCloudMapper.Base): PokemonsCloudMapper
+    fun bindPokemonsCloudMapper(pokemonsCloudMapper: PokemonsCloudMapper.Base): PokemonsCloudMapper
 
     @Binds
-     fun bindPokemonsCacheMapper(pokemonsCacheMapper: PokemonsCacheMapper.Base): PokemonsCacheMapper
+    fun bindPokemonsCacheMapper(pokemonsCacheMapper: PokemonsCacheMapper.Base): PokemonsCacheMapper
 
     @Binds
-     fun bindToPokemonMapper(toPokemonMapper: ToPokemonMapper.Base): ToPokemonMapper
+    fun bindToPokemonMapper(toPokemonMapper: ToPokemonMapper.Base): ToPokemonMapper
 
     @Binds
-     fun bindPokemonsDomainToUiMapper(pokemonsDomainToUiMapper: BasePokemonsDomainToUiMapper): PokemonsDomainToUiMapper
+    fun bindPokemonsDomainToUiMapper(pokemonsDomainToUiMapper: BasePokemonsDomainToUiMapper): PokemonsDomainToUiMapper<PokemonsUi>
 
     @Binds
-     fun bindPokemonDomainToUiMapper(pokemonDomainToUiMapper: BasePokemonDomainToUiMapper): PokemonDomainToUiMapper
+    fun bindPokemonDomainToUiMapper(pokemonDomainToUiMapper: BasePokemonDomainToUiMapper): PokemonDomainToUiMapper<PokemonUi>
 
     @Binds
-     fun bindPokemonCommunication(pokemonCommunication: PokemonCommunication.Base): PokemonCommunication
+    fun bindPokemonCommunication(pokemonCommunication: PokemonCommunication.Base): PokemonCommunication
 }

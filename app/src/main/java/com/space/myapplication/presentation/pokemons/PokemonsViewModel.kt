@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class PokemonsViewModel @Inject constructor(
     private val interactor: PokemonsInteractor,
-    private val uiMapper: PokemonsDomainToUiMapper,
+    private val uiMapper: PokemonsDomainToUiMapper<PokemonsUi>,
     private val communication: PokemonCommunication
 ) : ViewModel() {
 

@@ -11,7 +11,7 @@ interface PokemonCacheDataSource {
 
     class Base(
         private val realmProvider: RealmProvider,
-        private val pokemonDataToDbMapper: PokemonDataToDbMapper
+        private val pokemonDataToDbMapper: PokemonDataToDbMapper<PokemonEntity>
     ) : PokemonCacheDataSource {
         override fun getPokemonList(page: Int): List<PokemonEntity> {
             realmProvider.provide().use { realm ->
@@ -26,7 +26,7 @@ interface PokemonCacheDataSource {
             realmProvider.provide().use { realm ->
                 realm.executeTransaction {
                     pokemonsData.forEach { pokemonData ->
-                        pokemonData.mapTo(pokemonDataToDbMapper, PokemonDbWrapper(it), page)
+                        pokemonData.map(pokemonDataToDbMapper, PokemonDbWrapper(it), page)
                     }
                 }
             }
@@ -37,17 +37,3 @@ interface PokemonCacheDataSource {
         }
     }
 }
-
-/*
-interface DataSource<T> {
-    fun getData(): T
-}
-
-interface MutableDataSource<R> {
-    fun save(data: R)
-}
-
-interface CacheDataSource<T, R> : DataSource<T>, MutableDataSource<R>
-interface CloudDataSource<E> : DataSource<E>
-interface UpcomingCacheDataSourceNew : CacheDataSource<List<UpcomingEntity>, List<Upcoming>>
-*/

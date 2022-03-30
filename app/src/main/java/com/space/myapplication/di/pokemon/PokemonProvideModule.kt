@@ -5,15 +5,17 @@ import com.space.myapplication.core.ResourceProvider
 import com.space.myapplication.data.pokemons.*
 import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
 import com.space.myapplication.data.pokemons.cache.PokemonDataToDbMapper
+import com.space.myapplication.data.pokemons.cache.PokemonEntity
 import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
+import com.space.myapplication.data.pokemons.cloud.PokemonCloudDataSource
 import com.space.myapplication.data.pokemons.cloud.PokemonService
-import com.space.myapplication.domain.pokemons.BasePokemonDataToDomainMapper
-import com.space.myapplication.domain.pokemons.BasePokemonsDataToDomainMapper
-import com.space.myapplication.domain.pokemons.PokemonDomainToUiMapper
-import com.space.myapplication.domain.pokemons.PokemonsInteractor
+import com.space.myapplication.data.pokemons.cloud.PokemonsCloudMapper
+import com.space.myapplication.domain.pokemons.*
 import com.space.myapplication.presentation.pokemons.BasePokemonDomainToUiMapper
 import com.space.myapplication.presentation.pokemons.BasePokemonsDomainToUiMapper
 import com.space.myapplication.presentation.pokemons.PokemonCommunication
+import com.space.myapplication.domain.pokemons.PokemonDomainToUiMapper
+import com.space.myapplication.presentation.pokemons.PokemonUi
 import dagger.Module
 import dagger.Provides
 
@@ -24,26 +26,27 @@ class PokemonProvideModule {
         pokemonCloudDataSource: PokemonCloudDataSource,
         cacheDataSource: PokemonCacheDataSource,
         pokemonsCloudMapper: PokemonsCloudMapper,
-        pokemonsCacheMapper: PokemonsCacheMapper
-    ): PokemonRepository.Base {
-        return PokemonRepository.Base(
+        pokemonsCacheMapper: PokemonsCacheMapper,
+        mapper: PokemonsDataToDomainMapper<PokemonsDomain>
+    ): BasePokemonRepository<PokemonsDomain> {
+        return BasePokemonRepository(
             pokemonCloudDataSource,
             cacheDataSource,
             pokemonsCloudMapper,
-            pokemonsCacheMapper
+            pokemonsCacheMapper,
+            mapper
         )
     }
 
     @Provides
     fun providePokemonsInteractor(
-        pokemonRepository: PokemonRepository,
-        mapper: PokemonsDataToDomainMapper
+        pokemonRepository: PokemonRepository<PokemonsDomain>
     ): PokemonsInteractor.Base {
-        return PokemonsInteractor.Base(pokemonRepository, mapper)
+        return PokemonsInteractor.Base(pokemonRepository)
     }
 
     @Provides
-    fun providePokemonsDataToDomainMapper(pokemonMapper: PokemonDataToDomainMapper): BasePokemonsDataToDomainMapper {
+    fun providePokemonsDataToDomainMapper(pokemonMapper: PokemonDataToDomainMapper<PokemonDomain>): BasePokemonsDataToDomainMapper {
         return BasePokemonsDataToDomainMapper(pokemonMapper)
     }
 
@@ -60,7 +63,7 @@ class PokemonProvideModule {
     @Provides
     fun providePokemonCacheDataSource(
         realmProvider: RealmProvider,
-        pokemonDataToDbMapper: PokemonDataToDbMapper
+        pokemonDataToDbMapper: PokemonDataToDbMapper<PokemonEntity>
     ): PokemonCacheDataSource.Base {
         return PokemonCacheDataSource.Base(realmProvider, pokemonDataToDbMapper)
     }
@@ -88,7 +91,7 @@ class PokemonProvideModule {
     @Provides
     fun providePokemonsDomainToUiMapper(
         resourceProvider: ResourceProvider,
-        pokemonMapper: PokemonDomainToUiMapper
+        pokemonMapper: PokemonDomainToUiMapper<PokemonUi>
     ): BasePokemonsDomainToUiMapper {
         return BasePokemonsDomainToUiMapper(resourceProvider, pokemonMapper)
     }
