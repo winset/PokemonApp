@@ -8,6 +8,8 @@ import com.space.myapplication.data.pokemons.cache.PokemonsCacheMapper
 import com.space.myapplication.data.pokemons.cloud.PokemonCloudDataSource
 import com.space.myapplication.data.pokemons.cloud.PokemonDto
 import com.space.myapplication.data.pokemons.cloud.PokemonsCloudMapper
+import com.space.myapplication.domain.pokemons.PokemonDomain
+import com.space.myapplication.domain.pokemons.PokemonsDomain
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -24,11 +26,12 @@ class PokemonRepositoryTest : BasePokemonRepositoryTest() {
     fun test_no_connection_no_cache() = runBlocking {
         val testCloudDataSource = TestCloudDataSource(returnSuccess = false)
         val testCacheDataSource = TestCacheDataSource(returnSuccess = false)
-        val repository = PokemonRepository.Base(
+        val repository = BasePokemonRepository<PokemonsDomain>(
             testCloudDataSource,
             testCacheDataSource,
             PokemonsCloudMapper.Base(TestToPokemonMapper()),
-            PokemonsCacheMapper.Base(TestPokemonCacheMapper())
+            PokemonsCacheMapper.Base(TestPokemonCacheMapper()),
+            mapper
         )
         val page = 0
         val actual = repository.getPokemon(page)
@@ -40,19 +43,20 @@ class PokemonRepositoryTest : BasePokemonRepositoryTest() {
     fun test_cloud_success_no_cache() = runBlocking {
         val testCloudDataSource = TestCloudDataSource(returnSuccess = true)
         val testCacheDataSource = TestCacheDataSource(returnSuccess = false)
-        val repository = PokemonRepository.Base(
+        val repository = BasePokemonRepository<PokemonsDomain>(
             testCloudDataSource,
             testCacheDataSource,
             PokemonsCloudMapper.Base(TestToPokemonMapper()),
-            PokemonsCacheMapper.Base(TestPokemonCacheMapper())
+            PokemonsCacheMapper.Base(TestPokemonCacheMapper()),
+            mapper
         )
         val page = 0
         val actual = repository.getPokemon(page)
-        val expected = PokemonsData.Success(
+        val expected = PokemonsDomain.Success(
             listOf(
-                PokemonData("Dragon 1", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"),
-                PokemonData("Dragon 2", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"),
-                PokemonData("Dragon 3", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png")
+                PokemonDomain("Dragon 1", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"),
+                PokemonDomain("Dragon 2", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"),
+                PokemonDomain("Dragon 3", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png")
             )
         )
         assertEquals(expected, actual)
@@ -62,19 +66,20 @@ class PokemonRepositoryTest : BasePokemonRepositoryTest() {
     fun test_no_connection_with_cache() = runBlocking {
         val testCloudDataSource = TestCloudDataSource(returnSuccess = false)
         val testCacheDataSource = TestCacheDataSource(returnSuccess = true)
-        val repository = PokemonRepository.Base(
+        val repository = BasePokemonRepository<PokemonsDomain>(
             testCloudDataSource,
             testCacheDataSource,
             PokemonsCloudMapper.Base(TestToPokemonMapper()),
-            PokemonsCacheMapper.Base(TestPokemonCacheMapper())
+            PokemonsCacheMapper.Base(TestPokemonCacheMapper()),
+            mapper
         )
         val page = 0
         val actual = repository.getPokemon(page)
-        val expected = PokemonsData.Success(
+        val expected = PokemonsDomain.Success(
             listOf(
-                PokemonData("Dragon 10", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"),
-                PokemonData("Dragon 20", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"),
-                PokemonData("Dragon 30", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png")
+                PokemonDomain("Dragon 10", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"),
+                PokemonDomain("Dragon 20", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"),
+                PokemonDomain("Dragon 30", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png")
             )
         )
         assertEquals(expected, actual)
@@ -84,23 +89,28 @@ class PokemonRepositoryTest : BasePokemonRepositoryTest() {
     fun test_cloud_success_with_cache() = runBlocking {
         val testCloudDataSource = TestCloudDataSource(returnSuccess = true)
         val testCacheDataSource = TestCacheDataSource(returnSuccess = true)
-        val repository = PokemonRepository.Base(
+        val repository = BasePokemonRepository<PokemonsDomain>(
             testCloudDataSource,
             testCacheDataSource,
             PokemonsCloudMapper.Base(TestToPokemonMapper()),
-            PokemonsCacheMapper.Base(TestPokemonCacheMapper())
+            PokemonsCacheMapper.Base(TestPokemonCacheMapper()),
+            mapper
         )
         val page = 0
         val actual = repository.getPokemon(page)
-        val expected = PokemonsData.Success(
+        val expected = PokemonsDomain.Success(
             listOf(
-                PokemonData("Dragon 10", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"),
-                PokemonData("Dragon 20", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"),
-                PokemonData("Dragon 30", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png")
+                PokemonDomain("Dragon 10", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"),
+                PokemonDomain("Dragon 20", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"),
+                PokemonDomain("Dragon 30", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png")
             )
         )
         assertEquals(expected, actual)
     }
+
+    private val mapper = BasePokemonsDataToDomainMapper(object : PokemonDataToDomainMapper<PokemonDomain> {
+        override fun map(name: String, url: String) = PokemonDomain(name, url)
+    })
 
     private inner class TestCloudDataSource(
         private val returnSuccess: Boolean
@@ -147,4 +157,3 @@ class PokemonRepositoryTest : BasePokemonRepositoryTest() {
         }
     }
 }
-

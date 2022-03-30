@@ -1,11 +1,11 @@
-package com.space.myapplication.domain.species
+package com.space.myapplication.data.species
 
 import com.space.myapplication.core.ErrorType
-import com.space.myapplication.data.species.SpeciesDataToDomainMapper
+import com.space.myapplication.domain.species.SpeciesDomain
 import retrofit2.HttpException
 import java.net.UnknownHostException
 
-class BaseSpeciesDataToDomainMapper : SpeciesDataToDomainMapper {
+class BaseSpeciesDataToDomainMapper : SpeciesDataToDomainMapper<SpeciesDomain> {
     override fun map(
         id: Int,
         isBaby: Boolean,

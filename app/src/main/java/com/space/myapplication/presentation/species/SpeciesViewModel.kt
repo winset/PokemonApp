@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class SpeciesViewModel @Inject constructor(
     private val interactor: SpeciesInteractor,
-    private val uiMapper: SpeciesDomainToUiMapper,
+    private val uiMapper: SpeciesDomainToUiMapper<SpeciesUi>,
     private val communication: SpeciesCommunication
 ) : ViewModel() {
 

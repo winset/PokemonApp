@@ -26,10 +26,7 @@ class SpeciesFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by lazy {
-        ViewModelProvider(
-            this,
-            viewModelFactory
-        )[SpeciesViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[SpeciesViewModel::class.java]
     }
 
     override fun onAttach(context: Context) {

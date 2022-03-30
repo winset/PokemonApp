@@ -17,6 +17,5 @@ abstract class Abstract {
         interface DataToDomain<S, R> : Data<S, R> {
             fun map(e: Exception): R
         }
-
     }
 }
