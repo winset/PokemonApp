@@ -10,6 +10,7 @@ import com.space.myapplication.data.pokemons.cloud.PokemonCloudDataSource
 import com.space.myapplication.data.pokemons.cloud.PokemonDto
 import com.space.myapplication.data.pokemons.cloud.PokemonsCloudMapper
 import com.space.myapplication.domain.pokemons.PokemonDomain
+import com.space.myapplication.domain.pokemons.PokemonsDomain
 import io.realm.Realm
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -36,17 +37,17 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
         )
         val page = 0
         val actualCloud = repository.getPokemon(page)
-        val expectedCloud = PokemonsData.Success(
+        val expectedCloud = PokemonsDomain.Success(
             listOf(
-                PokemonData.Base(
+                PokemonDomain(
                     "Dragon 1",
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"
                 ),
-                PokemonData.Base(
+                PokemonDomain(
                     "Dragon 2",
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"
                 ),
-                PokemonData.Base(
+                PokemonDomain(
                     "Dragon 3",
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png"
                 )
@@ -55,19 +56,19 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
         assertEquals(expectedCloud, actualCloud)
 
         val actualCache = repository.getPokemon(page)
-        val expectedCache = PokemonsData.Success(
+        val expectedCache = PokemonsDomain.Success(
             listOf(
-                PokemonData.Base(
+                PokemonDomain(
                     "Dragon 1 db",
-                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10094.png"
+                    "https://1"
                 ),
-                PokemonData.Base(
+                PokemonDomain(
                     "Dragon 2 db",
-                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10095.png"
+                    "https://2"
                 ),
-                PokemonData.Base(
+                PokemonDomain(
                     "Dragon 3 db",
-                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10096.png"
+                    "https://3"
                 )
             )
         )
@@ -90,36 +91,32 @@ class PokemonRepositorySavePokemonTest : BasePokemonRepositoryTest() {
         }
     }
 
-    private val mapper = BasePokemonsDataToDomainMapper(object : PokemonDataToDomainMapper<PokemonDomain> {
-        override fun map(name: String, url: String) = PokemonDomain(name, url)
-    })
+    private val mapper =
+        BasePokemonsDataToDomainMapper(object : PokemonDataToDomainMapper<PokemonDomain> {
+            override fun map(name: String, url: String) = PokemonDomain(name, url)
+        })
 
-    private inner class TestCacheDataSource() : PokemonCacheDataSource {
+    private inner class TestCacheDataSource : PokemonCacheDataSource {
 
         private val list = mutableListOf<PokemonEntity>()
 
         override fun getPokemonList(page: Int): List<PokemonEntity> = list
 
         override fun savePokemonList(pokemonsData: List<PokemonData>, page: Int) {
-            pokemonsData.map { pokemon ->
-                val mapper = PokemonDataToDbMapper.Base()
                 list.add(PokemonEntity().apply {
-                    name = "${
-                        ""
-                        /*pokemon.mapTo(
-                            mapper,
-                            Realm.getDefaultInstance(),
-                            page
-                        ).name*/
-                    } db" //TODO fix it
-                    url = pokemon.map(mapper, PokemonDbWrapper(Realm.getDefaultInstance()), page).url
+                    name = "Dragon 1 db"
+                    url = "https://1"
                 })
-            }
-        }
-
-        private inner class PokemonDbWrapper(realm: Realm) :
-            DbWrapper.Base<PokemonEntity>(realm) {
-            override fun dbClass(): Class<PokemonEntity> = PokemonEntity::class.java
+                list.add(PokemonEntity().apply {
+                    name = "Dragon 2 db"
+                    url = "https://2"
+                })
+                list.add(
+                    PokemonEntity().apply {
+                        name = "Dragon 3 db"
+                        url = "https://3"
+                    }
+                )
         }
     }
 }

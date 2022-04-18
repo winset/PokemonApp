@@ -1,6 +1,7 @@
 package com.space.myapplication.data
 
 
+import com.space.myapplication.core.ErrorType
 import com.space.myapplication.data.pokemons.*
 import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
 import com.space.myapplication.data.pokemons.cache.PokemonEntity
@@ -35,7 +36,7 @@ class PokemonRepositoryTest : BasePokemonRepositoryTest() {
         )
         val page = 0
         val actual = repository.getPokemon(page)
-        val expected = PokemonsData.Fail(unknownHostException)
+        val expected = PokemonsDomain.Fail(ErrorType.NO_CONNECTION)
         assertEquals(expected, actual)
     }
 
