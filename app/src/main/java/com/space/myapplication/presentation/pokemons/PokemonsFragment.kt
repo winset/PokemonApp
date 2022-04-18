@@ -63,7 +63,6 @@ class PokemonsFragment : Fragment() {
         viewModel.observe(viewLifecycleOwner) {
             pokemonAdapter.update(it)
             (view.parent as? ViewGroup)?.doOnPreDraw {
-                // Parent has been drawn. Start transitioning!
                 startPostponedEnterTransition()
             }
         }
