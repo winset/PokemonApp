@@ -11,14 +11,12 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.space.myapplication.R
 import com.space.myapplication.core.DiffUtilCallback
 import com.space.myapplication.core.LoadImage
 
 class PokemonAdapter(
-    private val retry: Retry,
+    private val onRetryClick: () -> Unit,
     private val onPokemonClick: (String, String, FragmentNavigator.Extras) -> Unit
 ) : RecyclerView.Adapter<PokemonAdapter.UpcomingViewHolder>() {
     private val pokemonList = mutableListOf<PokemonUi>()
@@ -39,7 +37,7 @@ class PokemonAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         0 -> UpcomingViewHolder.Base(R.layout.pokemon_item.makeView(parent), onPokemonClick)
-        1 -> UpcomingViewHolder.Fail(R.layout.fail_fullscreen.makeView(parent), retry)
+        1 -> UpcomingViewHolder.Fail(R.layout.fail_fullscreen.makeView(parent), onRetryClick)
         else -> UpcomingViewHolder.FullscreenProgress(R.layout.progress_fullscreen.makeView(parent))
     }
 
@@ -81,7 +79,7 @@ class PokemonAdapter(
             }
         }
 
-        class Fail(view: View, private val retry: Retry) : UpcomingViewHolder(view) {
+        class Fail(view: View, private val onRetryClick: () -> Unit) : UpcomingViewHolder(view) {
             private val message = itemView.findViewById<TextView>(R.id.fail_message)
             private val tryAgainBtn = itemView.findViewById<Button>(R.id.try_again_btn)
             override fun bind(pokemon: PokemonUi) {
@@ -91,14 +89,10 @@ class PokemonAdapter(
                     }
                 })
                 tryAgainBtn.setOnClickListener {
-                    retry.tryAgain()
+                    onRetryClick()
                 }
             }
         }
-    }
-
-    interface Retry {
-        fun tryAgain()
     }
 }
 

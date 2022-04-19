@@ -49,28 +49,25 @@ class PokemonsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
-        val retry = object : PokemonAdapter.Retry {
-            override fun tryAgain() {
-                viewModel.getPokemons()
-            }
-        }
-        val pokemonAdapter = PokemonAdapter(retry, ::onPokemonClick)
-
+        val pokemonAdapter = PokemonAdapter(::retryClick, ::onPokemonClick)
         RecyclerPaging(binding.pokemonRv, ::loadMore)
+
         binding.pokemonRv.adapter = pokemonAdapter
         binding.pokemonRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         viewModel.observe(viewLifecycleOwner) {
             pokemonAdapter.update(it)
-            (view.parent as? ViewGroup)?.doOnPreDraw {
-                startPostponedEnterTransition()
-            }
+            (view.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() }
         }
 
         viewModel.getPokemons()
     }
 
     private fun loadMore() {
+        viewModel.getPokemons()
+    }
+
+    private fun retryClick(){
         viewModel.getPokemons()
     }
 
