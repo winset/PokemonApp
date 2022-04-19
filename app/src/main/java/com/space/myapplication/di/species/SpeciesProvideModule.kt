@@ -1,5 +1,6 @@
 package com.space.myapplication.di.species
 
+import com.space.myapplication.core.ErrorUiMapper
 import com.space.myapplication.core.RealmProvider
 import com.space.myapplication.core.ResourceProvider
 import com.space.myapplication.data.species.*
@@ -55,8 +56,8 @@ class SpeciesProvideModule {
     fun provideSpeciesCloudMapper() = ToSpeciesMapper.Base()
 
     @Provides
-    fun provideSpeciesDomainToUiMapper(resourceProvider: ResourceProvider) =
-        BaseSpeciesDomainToUiMapper(resourceProvider)
+    fun provideSpeciesDomainToUiMapper(errorUiMapper: ErrorUiMapper) =
+        BaseSpeciesDomainToUiMapper(errorUiMapper)
 
     @Provides
     fun provideSpeciesCommunication() = SpeciesCommunication.Base()

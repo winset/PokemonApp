@@ -1,12 +1,11 @@
 package com.space.myapplication.presentation.species
 
-import com.space.myapplication.R
 import com.space.myapplication.core.ErrorType
-import com.space.myapplication.core.ResourceProvider
+import com.space.myapplication.core.ErrorUiMapper
 import com.space.myapplication.domain.species.SpeciesDomainToUiMapper
 
 class BaseSpeciesDomainToUiMapper(
-    private val resourceProvider: ResourceProvider
+    private val errorMapper: ErrorUiMapper
 ) : SpeciesDomainToUiMapper<SpeciesUi> {
     override fun map(
         id: Int,
@@ -42,14 +41,5 @@ class BaseSpeciesDomainToUiMapper(
         order
     )
 
-    override fun map(errorType: ErrorType): SpeciesUi {
-        val msgId = when (errorType) {
-            ErrorType.NO_CONNECTION -> R.string.no_connection
-            ErrorType.SERVICE_UNAVAILABLE -> R.string.server_not_available
-            else -> R.string.something_go_wrong
-        }
-        val message = resourceProvider.getString(msgId)
-        return SpeciesUi.Fail(message)
-    }
-
+    override fun map(errorType: ErrorType): SpeciesUi = SpeciesUi.Fail(errorMapper.map(errorType))
 }

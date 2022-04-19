@@ -2,6 +2,7 @@ package com.space.myapplication.di.app
 
 import android.content.Context
 import androidx.annotation.RestrictTo
+import com.space.myapplication.core.ErrorUiMapper
 import com.space.myapplication.core.RealmProvider
 import com.space.myapplication.core.ResourceProvider
 import com.space.myapplication.data.pokemons.cloud.PokemonService
@@ -18,6 +19,7 @@ interface AppComponent : AppDeps {
     override val pokemonService: PokemonService
     override val realmProvider: RealmProvider
     override val resourceProvider: ResourceProvider
+    override val errorUiMapper: ErrorUiMapper
     override val speciesService: SpeciesService
 
     @Component.Builder
@@ -32,6 +34,7 @@ interface AppDeps {
     val pokemonService: PokemonService
     val speciesService: SpeciesService
     val realmProvider: RealmProvider
+    val errorUiMapper: ErrorUiMapper
     val resourceProvider: ResourceProvider
 }
 
