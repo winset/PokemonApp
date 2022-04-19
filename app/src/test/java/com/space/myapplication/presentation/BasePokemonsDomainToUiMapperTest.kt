@@ -2,6 +2,7 @@ package com.space.myapplication.presentation
 
 import com.space.myapplication.R
 import com.space.myapplication.core.ErrorType
+import com.space.myapplication.core.ErrorUiMapper
 import com.space.myapplication.core.ResourceProvider
 import com.space.myapplication.domain.pokemons.PokemonDomainToUiMapper
 import com.space.myapplication.presentation.pokemons.BasePokemonsDomainToUiMapper
@@ -19,8 +20,9 @@ class BasePokemonsDomainToUiMapperTest {
     @Test
     fun test_fail() {
         val resourceProvider = TestResourceProvider()
+        val errorUiMapper = ErrorUiMapper.Base(resourceProvider)
         val mapper =
-            BasePokemonsDomainToUiMapper(resourceProvider, object : PokemonDomainToUiMapper<PokemonUi> {
+            BasePokemonsDomainToUiMapper(errorUiMapper, object : PokemonDomainToUiMapper<PokemonUi> {
                 override fun map(name: String, url: String): PokemonUi {
                     throw IllegalStateException()//not used here
                 }

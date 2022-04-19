@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.space.myapplication.R
 import com.space.myapplication.core.DiffUtilCallback
+import com.space.myapplication.core.LoadImage
 
 class PokemonAdapter(
     private val retry: Retry,
@@ -66,11 +67,7 @@ class PokemonAdapter(
                     override fun map(name: String, url: String) {
                         this@Base.name.text = name
                         image.transitionName = name
-                        Glide.with(itemView)
-                            .load(url)
-                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                            .placeholder(R.drawable.pokemon_placeholder)
-                            .into(image)
+                        LoadImage.Base(url, R.drawable.pokemon_placeholder).load(image)
                     }
                 })
                 layout.setOnClickListener {

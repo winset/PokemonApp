@@ -12,6 +12,7 @@ import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.space.myapplication.R
+import com.space.myapplication.core.LoadImage
 import com.space.myapplication.databinding.FragmentSpeciesBinding
 import com.space.myapplication.di.app.AppDepsProvider
 import com.space.myapplication.di.app.ViewModelFactory
@@ -34,6 +35,7 @@ class SpeciesFragment : Fragment() {
             .build().inject(this)
         super.onAttach(context)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +43,8 @@ class SpeciesFragment : Fragment() {
     ): View {
         _binding = FragmentSpeciesBinding.inflate(inflater)
         binding.image.transitionName = args.name
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
         viewModel.getInfo(args.name)
         return binding.root
@@ -49,10 +52,6 @@ class SpeciesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.with(requireContext())
-            .load(args.url)
-            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-            .placeholder(R.drawable.pokemon_placeholder)
-            .centerCrop().into(binding.image)
+        LoadImage.Base(args.url, R.drawable.pokemon_placeholder).load(binding.image)
     }
 }
