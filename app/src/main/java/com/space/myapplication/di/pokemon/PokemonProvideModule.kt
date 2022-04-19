@@ -1,5 +1,6 @@
 package com.space.myapplication.di.pokemon
 
+import com.space.myapplication.core.ErrorUiMapper
 import com.space.myapplication.core.RealmProvider
 import com.space.myapplication.core.ResourceProvider
 import com.space.myapplication.data.pokemons.*
@@ -90,10 +91,10 @@ class PokemonProvideModule {
 
     @Provides
     fun providePokemonsDomainToUiMapper(
-        resourceProvider: ResourceProvider,
+        errorUiMapper: ErrorUiMapper,
         pokemonMapper: PokemonDomainToUiMapper<PokemonUi>
     ): BasePokemonsDomainToUiMapper {
-        return BasePokemonsDomainToUiMapper(resourceProvider, pokemonMapper)
+        return BasePokemonsDomainToUiMapper(errorUiMapper, pokemonMapper)
     }
 
     @Provides

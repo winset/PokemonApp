@@ -1,5 +1,6 @@
 package com.space.myapplication.di.pokemon
 
+import com.space.myapplication.core.ErrorUiMapper
 import com.space.myapplication.data.pokemons.*
 import com.space.myapplication.data.pokemons.cache.PokemonCacheDataSource
 import com.space.myapplication.data.pokemons.cache.PokemonDataToDbMapper

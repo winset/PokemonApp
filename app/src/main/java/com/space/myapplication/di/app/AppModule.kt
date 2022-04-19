@@ -1,8 +1,10 @@
 package com.space.myapplication.di.app
 
 import android.content.Context
+import com.space.myapplication.core.ErrorUiMapper
 import com.space.myapplication.core.RealmProvider
 import com.space.myapplication.core.ResourceProvider
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
@@ -17,4 +19,6 @@ class AppModule {
         return RealmProvider.Base()
     }
 
+    @Provides
+    fun provideErrorUiMapper(resourceProvider: ResourceProvider):ErrorUiMapper = ErrorUiMapper.Base(resourceProvider)
 }
