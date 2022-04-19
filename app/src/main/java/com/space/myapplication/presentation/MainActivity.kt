@@ -15,20 +15,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        insetsListener()
+    }
+
+    private fun insetsListener() {
         binding.navHostFragment.setOnApplyWindowInsetsListener { view, insets ->
             var consumed = false
-
             (view as ViewGroup).forEach { child ->
-                // Dispatch the insets to the child*
                 val childResult = child.dispatchApplyWindowInsets(insets)
-                // If the child consumed the insets, record it
-                if (childResult.isConsumed) {
-                    consumed = true
-                }
+                if (childResult.isConsumed) consumed = true
             }
-
-            // If any of the children consumed the insets, return
-            // an appropriate value*
             if (consumed) insets.consumeSystemWindowInsets() else insets
         }
     }

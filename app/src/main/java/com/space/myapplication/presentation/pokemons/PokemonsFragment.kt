@@ -32,7 +32,7 @@ class PokemonsFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-         DaggerPokemonComponent.builder().deps(AppDepsProvider.deps)
+        DaggerPokemonComponent.builder().deps(AppDepsProvider.deps)
             .build().inject(this)
         super.onAttach(context)
     }
@@ -67,7 +67,7 @@ class PokemonsFragment : Fragment() {
         viewModel.getPokemons()
     }
 
-    private fun retryClick(){
+    private fun retryClick() {
         viewModel.getPokemons()
     }
 
